@@ -29,20 +29,30 @@ Importar o ficheiro .sql que estará disponível no root deste projeto.
 
 ### Configuração
 Navegue até a pasta `/api`:
-`cd api`
+```
+cd api
+```
 
 Instale as dependências do Composer:
-`composer install`
+```
+composer install
+```
 
 Copie o arquivo de configuração:
-`cp .env.example .env`
+```
+cp .env.example .env
+```
 Configure o arquivo .env com suas credenciais de banco de dados e outras configurações necessárias.
 
 Inicie o servidor Laravel:
-`php artisan serve`
+```
+php artisan serve
+```
 
 Executar o seguinte comando no Ngrok:
-`ngrok http 8000`
+```
+ngrok http 8000
+```
 A API Laravel estará disponível aqui!
 
 Copiar o link para o api.js no /mobile:
@@ -56,12 +66,17 @@ Copiar o link para o api.js no /mobile:
 - Xcode (para desenvolvimento iOS, disponível apenas no macOS)
 
 ### Configuração
-```cd mobile
+```
+cd mobile
 npm install
 ```
 
 #### Para Android:
-`npm run android`
+```
+npm run android
+```
 
 #### Para iOS (apenas em macOS):
-`npm run ios`
+```
+npm run ios
+```
