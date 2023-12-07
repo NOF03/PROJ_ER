@@ -3,9 +3,9 @@
 Este repositório contém a implementação de uma aplicação Laravel na pasta `/api` e uma aplicação React Native na pasta `/mobile`.
 
 Temos 3 Tópicos:
-- MySQL Database
-- Laravel API
-- React Native App
+- MySQL | Database
+- Laravel | API
+- React Native | Mobile App
 
 
 ## MySQL Database
@@ -23,9 +23,17 @@ Importar o ficheiro .sql que estará disponível no root deste projeto.
 ## Laravel API
 
 ### Requisitos
-- PHP
-- Composer
-- Ngrok
+Recomendo utilizar o *chocolatey* para instalação de grande parte dos requisitos que vamos usar, vai estar indicado os comandos na consola a executar, como administrador.
+- PHP (choco install php)
+- Composer (choco install composer)
+- Ngrok (choco install ngrok)
+
+NECESSÁRIO: Ativar extensões no php.ini (remover o ";")
+extension=curl
+extension=fileinfo
+extension=openssl
+extension=pdo_mysql
+extension=zip
 
 ### Configuração
 Navegue até a pasta `/api`:
@@ -60,8 +68,7 @@ Copiar o link para o api.js no /mobile:
 ## React Native App
 
 ### Requisitos
-- Node.js
-- npm
+- Node.js (choco install nodejs-lts)
 - Android Studio (para desenvolvimento Android)
 - Xcode (para desenvolvimento iOS, disponível apenas no macOS)
 
