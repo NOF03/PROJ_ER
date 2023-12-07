@@ -28,12 +28,12 @@ Recomendo utilizar o *chocolatey* para instalação de grande parte dos requisit
 - Composer (choco install composer)
 - Ngrok (choco install ngrok)
 
-NECESSÁRIO: Ativar extensões no php.ini (remover o ";")
-extension=curl
-extension=fileinfo
-extension=openssl
-extension=pdo_mysql
-extension=zip
+NECESSÁRIO: Ativar extensões no php.ini (remover o ";") 
+- extension=curl 
+- extension=fileinfo 
+- extension=openssl 
+- extension=pdo_mysql 
+- extension=zip
 
 ### Configuração
 Navegue até a pasta `/api`:
