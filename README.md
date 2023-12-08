@@ -69,16 +69,31 @@ Copiar o link para o api.js no /mobile:
 
 ### Requisitos
 - Node.js (choco install nodejs-lts)
+- Java Development Kit (choco install microsoft-openjdk17)
 - Android Studio (para desenvolvimento Android)
 - Xcode (para desenvolvimento iOS, disponível apenas no macOS)
+- Ter a Virtualização ativada na BIOS.
 
 ### Configuração
+Select the "SDK Platforms" tab from within the SDK Manager, then check the box next to "Show Package Details" in the bottom right corner. Look for and expand the `Android 13 (Tiramisu)` entry, then make sure the following items are checked:
+
+- Android SDK Platform 33
+- Intel x86 Atom_64 System Image or Google APIs Intel x86 Atom System Image
+
+Next, select the "SDK Tools" tab and check the box next to "Show Package Details" here as well. Look for and expand the Android SDK Build-Tools entry, then make sure that `33.0.0` is selected.
+
 ```
 cd mobile
 npm install
 ```
 
 #### Para Android:
+- Abrir o "mobile" no Android Studio;
+- Criar um "Pixel 7" com o Tiramisu 13 (SDK 33) em cima à direita onde diz "Virtual Device Manager".
+- Ir a para "File" e depois "Project Structure" e selecionar o SDK 33. Se nao encontrar, clicar em "Browse" e selecionar a pasta "<user>/Appdata/Android/Sdk" e ele irá encontrar e aí selecionar o 33.
+- Correr o comando: `npx react-native doctor` e se houver algum erro clicar no "f".
+- Algum erro específico: procurar na net.
+
 ```
 npm run android
 ```

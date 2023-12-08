@@ -19,15 +19,20 @@
 -- Table structure for table `administrador`
 --
 
+DROP DATABASE IF EXISTS `creche`;
+
+CREATE DATABASE `creche`;
+USE `creche`;
+
 DROP TABLE IF EXISTS `administrador`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `administrador` (
   `idAdministrador` int NOT NULL AUTO_INCREMENT,
-  `Pessoa_cartaoCidadao` int unsigned NOT NULL,
-  PRIMARY KEY (`idAdministrador`,`Pessoa_cartaoCidadao`),
-  KEY `fk_Administrador_Pessoa1_idx` (`Pessoa_cartaoCidadao`),
-  CONSTRAINT `fk_Administrador_Pessoa1` FOREIGN KEY (`Pessoa_cartaoCidadao`) REFERENCES `pessoa` (`cartaoCidadao`)
+  `ccPessoa` int unsigned NOT NULL,
+  PRIMARY KEY (`idAdministrador`,`ccPessoa`),
+  KEY `fk_Administrador_Pessoa1_idx` (`ccPessoa`),
+  CONSTRAINT `fk_Administrador_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,12 +55,12 @@ DROP TABLE IF EXISTS `anuncio`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `anuncio` (
   `idAnuncio` int NOT NULL AUTO_INCREMENT,
-  `Administrador_idAdministrador` int NOT NULL,
+  `idAdministrador` int NOT NULL,
   `descricao` mediumtext NOT NULL,
-  PRIMARY KEY (`idAnuncio`,`Administrador_idAdministrador`),
+  PRIMARY KEY (`idAnuncio`,`idAdministrador`),
   UNIQUE KEY `idAnuncios_UNIQUE` (`idAnuncio`),
-  KEY `fk_Anuncios_Administrador1_idx` (`Administrador_idAdministrador`),
-  CONSTRAINT `fk_Anuncios_Administrador1` FOREIGN KEY (`Administrador_idAdministrador`) REFERENCES `administrador` (`idAdministrador`)
+  KEY `fk_Anuncios_Administrador1_idx` (`idAdministrador`),
+  CONSTRAINT `fk_Anuncios_Administrador1` FOREIGN KEY (`idAdministrador`) REFERENCES `administrador` (`idAdministrador`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -82,14 +87,14 @@ CREATE TABLE `atividade` (
   `duracao` int NOT NULL,
   `descricao` varchar(45) NOT NULL,
   `objetivo` varchar(45) NOT NULL,
-  `Educador_idEducador` int NOT NULL,
-  `Turma_idTurma` int unsigned NOT NULL,
-  PRIMARY KEY (`idAtividade`,`Educador_idEducador`,`Turma_idTurma`),
+  `idEducador` int NOT NULL,
+  `idTurma` int unsigned NOT NULL,
+  PRIMARY KEY (`idAtividade`,`idEducador`,`idTurma`),
   UNIQUE KEY `idAtividade_UNIQUE` (`idAtividade`),
-  KEY `fk_Atividade_Turma1_idx` (`Turma_idTurma`),
-  KEY `fk_Atividade_Educador1_idx` (`Educador_idEducador`),
-  CONSTRAINT `fk_Atividade_Educador1` FOREIGN KEY (`Educador_idEducador`) REFERENCES `educador` (`idEducador`),
-  CONSTRAINT `fk_Atividade_Turma1` FOREIGN KEY (`Turma_idTurma`) REFERENCES `turma` (`idTurma`)
+  KEY `fk_Atividade_Turma1_idx` (`idTurma`),
+  KEY `fk_Atividade_Educador1_idx` (`idEducador`),
+  CONSTRAINT `fk_Atividade_Educador1` FOREIGN KEY (`idEducador`) REFERENCES `educador` (`idEducador`),
+  CONSTRAINT `fk_Atividade_Turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -112,10 +117,10 @@ DROP TABLE IF EXISTS `auxiliareducativo`;
 CREATE TABLE `auxiliareducativo` (
   `idAuxiliar` int NOT NULL AUTO_INCREMENT,
   `salario` float NOT NULL,
-  `Pessoa_cartaoCidadao` int unsigned NOT NULL,
-  PRIMARY KEY (`idAuxiliar`,`Pessoa_cartaoCidadao`),
-  KEY `fk_AuxiliarEducativo_Pessoa1_idx` (`Pessoa_cartaoCidadao`),
-  CONSTRAINT `fk_AuxiliarEducativo_Pessoa1` FOREIGN KEY (`Pessoa_cartaoCidadao`) REFERENCES `pessoa` (`cartaoCidadao`)
+  `ccPessoa` int unsigned NOT NULL,
+  PRIMARY KEY (`idAuxiliar`,`ccPessoa`),
+  KEY `fk_AuxiliarEducativo_Pessoa1_idx` (`ccPessoa`),
+  CONSTRAINT `fk_AuxiliarEducativo_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -141,13 +146,13 @@ CREATE TABLE `avaliacao` (
   `nota` varchar(45) NOT NULL,
   `observacao` varchar(45) DEFAULT NULL,
   `data` datetime NOT NULL,
-  `Crianca_idCrianca` int NOT NULL,
-  `Atividade_idAtividade` int unsigned NOT NULL,
-  PRIMARY KEY (`idAvaliacao`,`Crianca_idCrianca`,`Atividade_idAtividade`),
-  KEY `fk_Avaliacao_Crianca1_idx` (`Crianca_idCrianca`),
-  KEY `fk_Avaliacao_Atividade1_idx` (`Atividade_idAtividade`),
-  CONSTRAINT `fk_Avaliacao_Atividade1` FOREIGN KEY (`Atividade_idAtividade`) REFERENCES `atividade` (`idAtividade`),
-  CONSTRAINT `fk_Avaliacao_Crianca1` FOREIGN KEY (`Crianca_idCrianca`) REFERENCES `crianca` (`idCrianca`)
+  `idCrianca` int NOT NULL,
+  `idAtividade` int unsigned NOT NULL,
+  PRIMARY KEY (`idAvaliacao`,`idCrianca`,`idAtividade`),
+  KEY `fk_Avaliacao_Crianca1_idx` (`idCrianca`),
+  KEY `fk_Avaliacao_Atividade1_idx` (`idAtividade`),
+  CONSTRAINT `fk_Avaliacao_Atividade1` FOREIGN KEY (`idAtividade`) REFERENCES `atividade` (`idAtividade`),
+  CONSTRAINT `fk_Avaliacao_Crianca1` FOREIGN KEY (`idCrianca`) REFERENCES `crianca` (`idCrianca`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -169,13 +174,13 @@ DROP TABLE IF EXISTS `crianca`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `crianca` (
   `idCrianca` int NOT NULL AUTO_INCREMENT,
-  `Pessoa_cartaoCidadao` int unsigned NOT NULL,
-  `Turma_idTurma` int unsigned NOT NULL,
-  PRIMARY KEY (`idCrianca`,`Pessoa_cartaoCidadao`,`Turma_idTurma`),
-  KEY `fk_Crianca_Pessoa1_idx` (`Pessoa_cartaoCidadao`),
-  KEY `fk_Crianca_Turma1_idx` (`Turma_idTurma`),
-  CONSTRAINT `fk_Crianca_Pessoa1` FOREIGN KEY (`Pessoa_cartaoCidadao`) REFERENCES `pessoa` (`cartaoCidadao`),
-  CONSTRAINT `fk_Crianca_Turma1` FOREIGN KEY (`Turma_idTurma`) REFERENCES `turma` (`idTurma`)
+  `ccPessoa` int unsigned NOT NULL,
+  `idTurma` int unsigned NOT NULL,
+  PRIMARY KEY (`idCrianca`,`ccPessoa`,`idTurma`),
+  KEY `fk_Crianca_Pessoa1_idx` (`ccPessoa`),
+  KEY `fk_Crianca_Turma1_idx` (`idTurma`),
+  CONSTRAINT `fk_Crianca_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
+  CONSTRAINT `fk_Crianca_Turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -197,13 +202,13 @@ DROP TABLE IF EXISTS `crianca_has_encarregadoeducacao`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `crianca_has_encarregadoeducacao` (
-  `Crianca_idCrianca` int NOT NULL,
-  `EncarregadoEducacao_idEncarregado` int NOT NULL,
-  PRIMARY KEY (`Crianca_idCrianca`,`EncarregadoEducacao_idEncarregado`),
-  KEY `fk_Crianca_has_EncarregadoEducacao_EncarregadoEducacao1_idx` (`EncarregadoEducacao_idEncarregado`),
-  KEY `fk_Crianca_has_EncarregadoEducacao_Crianca1_idx` (`Crianca_idCrianca`),
-  CONSTRAINT `fk_Crianca_has_EncarregadoEducacao_Crianca1` FOREIGN KEY (`Crianca_idCrianca`) REFERENCES `crianca` (`idCrianca`),
-  CONSTRAINT `fk_Crianca_has_EncarregadoEducacao_EncarregadoEducacao1` FOREIGN KEY (`EncarregadoEducacao_idEncarregado`) REFERENCES `encarregadoeducacao` (`idEncarregado`)
+  `idCrianca` int NOT NULL,
+  `idEncarregado` int NOT NULL,
+  PRIMARY KEY (`idCrianca`,`idEncarregado`),
+  KEY `fk_Crianca_has_EncarregadoEducacao_EncarregadoEducacao1_idx` (`idEncarregado`),
+  KEY `fk_Crianca_has_EncarregadoEducacao_Crianca1_idx` (`idCrianca`),
+  CONSTRAINT `fk_Crianca_has_EncarregadoEducacao_Crianca1` FOREIGN KEY (`idCrianca`) REFERENCES `crianca` (`idCrianca`),
+  CONSTRAINT `fk_Crianca_has_EncarregadoEducacao_EncarregadoEducacao1` FOREIGN KEY (`idEncarregado`) REFERENCES `encarregadoeducacao` (`idEncarregado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -228,14 +233,14 @@ CREATE TABLE `educador` (
   `idEducador` int NOT NULL AUTO_INCREMENT,
   `contacto` int unsigned NOT NULL,
   `salario` float unsigned NOT NULL,
-  `Turma_idTurma` int unsigned NOT NULL,
-  `Pessoa_cartaoCidadao` int unsigned NOT NULL,
-  PRIMARY KEY (`idEducador`,`Turma_idTurma`,`Pessoa_cartaoCidadao`),
+  `idTurma` int unsigned NOT NULL,
+  `ccPessoa` int unsigned NOT NULL,
+  PRIMARY KEY (`idEducador`,`idTurma`,`ccPessoa`),
   UNIQUE KEY `contacto_UNIQUE` (`contacto`),
-  KEY `fk_Educador_Turma1_idx` (`Turma_idTurma`),
-  KEY `fk_Educador_Pessoa1_idx` (`Pessoa_cartaoCidadao`),
-  CONSTRAINT `fk_Educador_Pessoa1` FOREIGN KEY (`Pessoa_cartaoCidadao`) REFERENCES `pessoa` (`cartaoCidadao`),
-  CONSTRAINT `fk_Educador_Turma1` FOREIGN KEY (`Turma_idTurma`) REFERENCES `turma` (`idTurma`)
+  KEY `fk_Educador_Turma1_idx` (`idTurma`),
+  KEY `fk_Educador_Pessoa1_idx` (`ccPessoa`),
+  CONSTRAINT `fk_Educador_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
+  CONSTRAINT `fk_Educador_Turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -260,10 +265,10 @@ CREATE TABLE `encarregadoeducacao` (
   `idEncarregado` int NOT NULL AUTO_INCREMENT,
   `contacto` varchar(45) NOT NULL,
   `parentesco` varchar(45) NOT NULL,
-  `Pessoa_cartaoCidadao` int unsigned NOT NULL,
-  PRIMARY KEY (`idEncarregado`,`Pessoa_cartaoCidadao`),
-  KEY `fk_EncarregadoEducacao_Pessoa1_idx` (`Pessoa_cartaoCidadao`),
-  CONSTRAINT `fk_EncarregadoEducacao_Pessoa1` FOREIGN KEY (`Pessoa_cartaoCidadao`) REFERENCES `pessoa` (`cartaoCidadao`)
+  `ccPessoa` int unsigned NOT NULL,
+  PRIMARY KEY (`idEncarregado`,`ccPessoa`),
+  KEY `fk_EncarregadoEducacao_Pessoa1_idx` (`ccPessoa`),
+  CONSTRAINT `fk_EncarregadoEducacao_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -334,4 +339,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-07  0:32:42
+-- Dump completed on 2023-12-08 12:05:30
