@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\AnnounceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,5 @@ use App\Http\Controllers\Controller;
 Route::get('/', [Controller::class, 'testConnection']);
 
 Route::get('hello',[Controller::class, 'index']);
+
+Route::get('/announcements', [AnnounceController::class, 'SelectAnnouncements']);

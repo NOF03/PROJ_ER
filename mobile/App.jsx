@@ -15,7 +15,9 @@ function App() {
       ...DarkTheme.colors,
       primary: '#44cc77',
       background: '#1e1e1e',
-      text: '#ebf1f1'
+      text: '#ebf1f1',
+      inactive: '#bec3c7',
+      hardBackground: '#000'
     },
   };
   const MyDefaultTheme = {
@@ -26,6 +28,7 @@ function App() {
       primary: '#309054',
       text: '#1e1e1e',
       inactive: '#bec3c7',
+      hardBackground: '#fff'
     },
   };
 
