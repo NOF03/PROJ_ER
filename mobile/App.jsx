@@ -4,7 +4,7 @@ import { useColorScheme } from 'react-native';
 
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 
-import { MyTabs } from './BottomNavigator';
+import MainNavigator from './src/components/MainNavigator';
 
 function App() {
 
@@ -17,7 +17,8 @@ function App() {
       background: '#1e1e1e',
       text: '#ebf1f1',
       inactive: '#bec3c7',
-      hardBackground: '#000'
+      hardBackground: '#000',
+      inverthard: '#fff'
     },
   };
   const MyDefaultTheme = {
@@ -28,7 +29,8 @@ function App() {
       primary: '#309054',
       text: '#1e1e1e',
       inactive: '#bec3c7',
-      hardBackground: '#fff'
+      hardBackground: '#fff',
+      inverthard: '#000'
     },
   };
 
@@ -36,7 +38,7 @@ function App() {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <MyTabs />
+      <MainNavigator />
     </NavigationContainer>
   );
 }

@@ -13,9 +13,9 @@ class AnnounceController extends BaseController
 
     public function SelectAnnouncements()
     {
-        $announcements = DB::select('SELECT pessoa.nome as "Autor", anuncio.descricao as "Anuncio" FROM creche.anuncio, creche.administrador, creche.pessoa WHERE anuncio.idAdministrador=administrador.idAdministrador AND administrador.ccPessoa=pessoa.cartaoCidadao');
+        $adminAnnouncements = DB::select('SELECT pessoa.nome as "Autor", anuncio.descricao as "Anuncio", anuncio.titulo as "Titulo" FROM creche.anuncio, creche.administrador, creche.pessoa WHERE anuncio.idAdministrador=administrador.idAdministrador AND administrador.ccPessoa=pessoa.cartaoCidadao');
 
-        return ['announcements' => $announcements];
+        return ['adminAnnouncements' => $adminAnnouncements];
     }
     
 }

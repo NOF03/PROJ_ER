@@ -4,14 +4,14 @@ import { Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-import Activities from './src/views/Activities';
-import Announcement from './src/views/Announcement';
-import News from './src/views/News';
-import Profile from './src/views/Profile';
+import Activities from '../views/Activities';
+import Announcement from '../views/Announcement';
+import News from '../views/News';
+import Profile from '../views/Profile';
 
 const Tab = createBottomTabNavigator();
 
-export function MyTabs() {
+export default function BottomNavigator() {
 
   return (
     <Tab.Navigator
