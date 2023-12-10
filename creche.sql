@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `creche` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `creche`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: creche
@@ -18,11 +20,6 @@
 --
 -- Table structure for table `administrador`
 --
-
-DROP DATABASE IF EXISTS `creche`;
-
-CREATE DATABASE `creche`;
-USE `creche`;
 
 DROP TABLE IF EXISTS `administrador`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -57,11 +54,12 @@ CREATE TABLE `anuncio` (
   `idAnuncio` int NOT NULL AUTO_INCREMENT,
   `idAdministrador` int NOT NULL,
   `descricao` mediumtext NOT NULL,
+  `titulo` varchar(100) NOT NULL,
   PRIMARY KEY (`idAnuncio`,`idAdministrador`),
   UNIQUE KEY `idAnuncios_UNIQUE` (`idAnuncio`),
   KEY `fk_Anuncios_Administrador1_idx` (`idAdministrador`),
   CONSTRAINT `fk_Anuncios_Administrador1` FOREIGN KEY (`idAdministrador`) REFERENCES `administrador` (`idAdministrador`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,8 +68,34 @@ CREATE TABLE `anuncio` (
 
 LOCK TABLES `anuncio` WRITE;
 /*!40000 ALTER TABLE `anuncio` DISABLE KEYS */;
-INSERT INTO `anuncio` VALUES (1,1,'Se você procura um ambiente acolhedor e educativo para o seu filho, não procure mais. Estamos aceitando inscrições para todas as idades. Agende uma visita à nossa creche para conhecer nossa equipe, instalações e descobrir como podemos fazer a diferença na vida do seu filho.');
+INSERT INTO `anuncio` VALUES (1,1,'Se você procura um ambiente acolhedor e educativo para o seu filho, não procure mais. Estamos aceitando inscrições para todas as idades. Agende uma visita à nossa creche para conhecer nossa equipe, instalações e descobrir como podemos fazer a diferença na vida do seu filho.','Ambiente'),(2,1,'A criatividade é o coração da nossa creche! Proporcionamos atividades educativas e lúdicas que incentivam o desenvolvimento cognitivo e emocional das crianças. Pintura, música, jogos - cada dia é uma oportunidade para aprender e se divertir!','Atividades Criativas');
 /*!40000 ALTER TABLE `anuncio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `anuncioturma`
+--
+
+DROP TABLE IF EXISTS `anuncioturma`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `anuncioturma` (
+  `idanuncioTurma` int NOT NULL AUTO_INCREMENT,
+  `idTurma` int NOT NULL,
+  `descricao` mediumtext NOT NULL,
+  `titulo` varchar(100) NOT NULL,
+  PRIMARY KEY (`idanuncioTurma`,`idTurma`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `anuncioturma`
+--
+
+LOCK TABLES `anuncioturma` WRITE;
+/*!40000 ALTER TABLE `anuncioturma` DISABLE KEYS */;
+INSERT INTO `anuncioturma` VALUES (1,1,'Queridos Encarregados de Educação,\n\nÉ com grande entusiasmo que partilhamos as novidades empolgantes da nossa jornada educativa! Na qualidade de educadores dedicados, estamos empenhados em proporcionar uma experiência educacional significativa para os vossos queridos filhos.','Anúncio Especial para Encarregados de Educação');
+/*!40000 ALTER TABLE `anuncioturma` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -339,4 +363,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-08 12:05:30
+-- Dump completed on 2023-12-10  2:04:29
