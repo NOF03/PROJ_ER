@@ -6,6 +6,8 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 
 import MainNavigator from './src/components/MainNavigator';
 
+import { UserProvider } from './src/components/UserContext';
+
 function App() {
 
   const MyDarkTheme = {
@@ -37,9 +39,11 @@ function App() {
   const navigationTheme = useColorScheme() === "dark" ? MyDarkTheme : MyDefaultTheme;
 
   return (
-    <NavigationContainer theme={navigationTheme}>
-      <MainNavigator />
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer theme={navigationTheme}>
+        <MainNavigator />
+      </NavigationContainer>
+    </UserProvider>
   );
 }
 

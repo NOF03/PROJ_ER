@@ -6,11 +6,14 @@ import { useTheme } from '@react-navigation/native';
 
 import { apiURL } from '../services/api';
 
+import { useUserContext } from '../components/UserContext';
+
 export default function MenuLogin({navigation}) {
 
     const [ccPessoa, setCcPessoa] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const { colors } = useTheme();
+    const { setUserContext } = useUserContext();
 
     const verifyIdentification = async () => {
         const requestOptions = {
@@ -24,7 +27,8 @@ export default function MenuLogin({navigation}) {
 
             const data = await response.json();
             if (data.userExists) {
-                navigation.navigate('InAppNavigator', { userData: data });
+                setUserContext(data.user);
+                navigation.navigate('InAppNavigator');
             } else {
                 setErrorMessage('Número não consta na base de dados');
             }

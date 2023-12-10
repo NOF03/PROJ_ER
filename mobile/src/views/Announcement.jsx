@@ -7,16 +7,28 @@ import { useTheme } from '@react-navigation/native';
 
 import CardAnnounce from '../components/CardAnnounce';
 
+import { useUserContext } from '../components/UserContext';
+
 const AnunciosScreen = () => {
   const [announcements, setAnnouncements] = useState(null);
   const { colors } = useTheme();
+  const { user } = useUserContext();
+
   useEffect(() => {
     fetchAnnouncements();
+    console.log(user)
   }, []);
 
   const fetchAnnouncements = async () => {
+
+    const idTurma = user.roleTraits['idTurma'];
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idTurma })
+    };
     try {
-      const response = await fetch(apiURL + '/announcements');
+      const response = await fetch(apiURL + '/announcements', requestOptions);
       const data = await response.json();
       setAnnouncements(data.adminAnnouncements);
     } catch (error) {
@@ -36,6 +48,7 @@ const AnunciosScreen = () => {
 
   return (
     <View style={{ padding: 16 }}>
+      <Text>Bem vindo, {user.userInfo[0].nome} | {user.role}</Text>
       <Section color={"red"} content={"Anúncios Gerais"} />
       <FlatList
         data={announcements}

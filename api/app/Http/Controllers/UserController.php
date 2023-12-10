@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Routing\Controller as BaseController;
@@ -13,14 +12,14 @@ use Illuminate\Support\Facades\Http;
 
 class UserController extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, ValidatesRequests;
     
     public function verifyIdentification(Request $request) 
 {
     try {
         $ccPessoa = $request->input('ccPessoa');
         
-        $userVerify = DB::select('SELECT cartaoCidadao FROM creche.pessoa WHERE cartaoCidadao ='.$ccPessoa .' LIMIT 1');
+        $userVerify = DB::select('SELECT * FROM creche.pessoa WHERE cartaoCidadao = ? LIMIT 1', [$ccPessoa]);
         if (count($userVerify) === 0) {
             return ['userExists' => false, 'error' => 'Número não consta na base de dados'];
         }
@@ -29,7 +28,7 @@ class UserController extends BaseController
         foreach ($roles as $role) {
             $roleCheck = DB::select("SELECT * FROM creche.{$role} WHERE ccPessoa = ? LIMIT 1", [$ccPessoa]);
             if (count($roleCheck) > 0) {
-                return ['userExists' => true, 'role' => $role];
+                return ['userExists' => true, 'user' => ['role' => $role, 'roleTraits' => $roleCheck, 'userInfo' => $userVerify]];
             }
         }
 
