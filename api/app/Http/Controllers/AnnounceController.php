@@ -15,21 +15,29 @@ class AnnounceController extends BaseController
 
     public function SelectAnnouncements(Request $request)
     {
-        $idTurma = $request->input('idTurma');
 
         $adminAnnouncements = DB::select('SELECT pessoa.nome as "Autor", anuncio.descricao as "Anuncio", anuncio.titulo as "Titulo" 
                                             FROM creche.anuncio, creche.administrador, creche.pessoa 
                                             WHERE anuncio.idAdministrador=administrador.idAdministrador AND administrador.ccPessoa=pessoa.cartaoCidadao 
                                             ORDER BY anuncio.idAnuncio DESC');
 
+        if ($request->has('idTurma') != null) {
+            $idTurma = $request->input('idTurma');
+        } else {
+            $idEncarregado = $request->input('idEncarregado');
+            $idTurma = DB::select('SELECT crianca.idTurma as "turma"
+                                    FROM creche.crianca, creche.crianca_has_encarregadoeducacao, creche.encarregadoeducacao
+                                    WHERE encarregadoeducacao.idEncarregado= ? 
+                                    AND crianca_has_encarregadoeducacao.idEncarregado=encarregadoeducacao.idEncarregado 
+                                    AND crianca_has_encarregadoeducacao.idCrianca=crianca.idCrianca', [$idEncarregado])[0]->turma;
+            
+        }
         $classAnnouncements = DB::select('SELECT anuncioturma.descricao as "Anuncio", anuncioturma.titulo as "Titulo", pessoa.nome as "Autor"
                                             FROM creche.anuncioturma
                                             LEFT JOIN creche.educador ON anuncioturma.idTurma = educador.idTurma
                                             LEFT JOIN creche.pessoa ON educador.ccPessoa = pessoa.cartaoCidadao
                                             WHERE anuncioturma.idTurma = ?
                                             ORDER BY anuncioturma.idanuncioTurma DESC', [$idTurma]);
-
-
         return ['adminAnnouncements' => $adminAnnouncements, 'classAnnouncements' => $classAnnouncements];
     }
 

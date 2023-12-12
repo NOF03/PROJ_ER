@@ -25,10 +25,11 @@ const AnunciosScreen = () => {
 
   const fetchAnnouncements = async () => {
     try {
+      const input = (user.role === "encarregadoeducacao") ? {idEncarregado: user.roleTraits[0].idEncarregado} : { idTurma: user.roleTraits[0].idTurma };
       const requestOptions = acessToAll ? {} : {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ idTurma: user.roleTraits[0].idTurma })
+        body: JSON.stringify(input)
       }
 
       const response = await fetch(apiURL + '/announcements', requestOptions);
@@ -72,7 +73,7 @@ const AnunciosScreen = () => {
 
             {!acessToAll ? (
               <>
-                <Section color={colors.primary} content={"Anúncios Turma " + user.roleTraits[0].idTurma} />
+                <Section color={colors.primary} content={ (user.roleTraits[0].idTurma) ? "Anúncios Turma " + user.roleTraits[0].idTurma : "Anúncios Turma" } />
                 <FlatList
                   data={announcements.classAnnouncements}
                   keyExtractor={(item, index) => index.toString()}
