@@ -17,6 +17,7 @@ export default function CardAnnounce({ item }) {
       borderRadius: 8,
       width: 300,
       marginRight: 16,
+      height: 240
     },
     announcementImage: {
       width: '100%',

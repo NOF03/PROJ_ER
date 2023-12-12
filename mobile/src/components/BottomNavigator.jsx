@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import { Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { useUserContext } from './UserContext'
 
 import Activities from '../views/Activities';
 import Announcement from '../views/Announcement';
@@ -12,7 +12,7 @@ import Profile from '../views/Profile';
 const Tab = createBottomTabNavigator();
 
 export default function BottomNavigator() {
-
+  const { user } = useUserContext();
   return (
     <Tab.Navigator
       initialRouteName="Anuncios"
@@ -79,7 +79,8 @@ export default function BottomNavigator() {
       })}
     >
       <Tab.Screen name="Anuncios" component={Announcement} />
-      <Tab.Screen name="Atividades" component={Activities} />
+      {console.log(user)}
+      {user && user.role !== "auxiliareducativo" && <Tab.Screen name="Atividades" component={Activities} />}
       <Tab.Screen name="Novidades" component={News} />
       <Tab.Screen name="Perfil" component={Profile} />
     </Tab.Navigator>

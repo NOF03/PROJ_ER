@@ -17,9 +17,11 @@ export default function CardAnnounceClass({ item }) {
       borderRadius: 8,
       width: 300,
       marginRight: 16,
+      height: 240
     },
     announcementImage: {
-      width: '100%',
+      width: '60%',
+      alignSelf: 'center',
       height: 120,
       marginBottom: 8,
       borderRadius: 8,
@@ -84,7 +86,7 @@ export default function CardAnnounceClass({ item }) {
     <View>
       <TouchableOpacity activeOpacity={0.4} onPress={toggleModal}>
         <View style={styles.announcementItem}>
-          <Image source={require('../assets/megafone.jpg')} style={styles.announcementImage} />
+          <Image source={require('../assets/green-info.png')} style={styles.announcementImage} />
           <View style={{ paddingHorizontal: 20, paddingVertical: 8 }}>
             <Text style={styles.titleText}>{item.Titulo}</Text>
             <View style={styles.line} />
@@ -103,7 +105,7 @@ export default function CardAnnounceClass({ item }) {
           <ScrollView contentContainerStyle={styles.modalContent}>
             <Image source={require('../assets/megafone.jpg')} style={styles.announcementImage} />
             <View style={{ paddingHorizontal: 20, paddingVertical: 8 }}>
-              <Text style={styles.titleText}>{item.Titulo}</Text>
+              <Text style={styles.titleTextModal}>{item.Titulo}</Text>
               <Text style={styles.announcementText}>{item.Anuncio}</Text>
               <Text style={styles.authorText}>{item.Autor} | Educador</Text>
             </View>

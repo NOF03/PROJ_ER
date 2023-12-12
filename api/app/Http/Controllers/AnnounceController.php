@@ -21,17 +21,9 @@ class AnnounceController extends BaseController
                                             WHERE anuncio.idAdministrador=administrador.idAdministrador AND administrador.ccPessoa=pessoa.cartaoCidadao 
                                             ORDER BY anuncio.idAnuncio DESC');
 
-        if ($request->has('idTurma') != null) {
-            $idTurma = $request->input('idTurma');
-        } else {
-            $idEncarregado = $request->input('idEncarregado');
-            $idTurma = DB::select('SELECT crianca.idTurma as "turma"
-                                    FROM creche.crianca, creche.crianca_has_encarregadoeducacao, creche.encarregadoeducacao
-                                    WHERE encarregadoeducacao.idEncarregado= ? 
-                                    AND crianca_has_encarregadoeducacao.idEncarregado=encarregadoeducacao.idEncarregado 
-                                    AND crianca_has_encarregadoeducacao.idCrianca=crianca.idCrianca', [$idEncarregado])[0]->turma;
-            
-        }
+
+        $idTurma = $request->input('idTurma');
+        
         $classAnnouncements = DB::select('SELECT anuncioturma.descricao as "Anuncio", anuncioturma.titulo as "Titulo", pessoa.nome as "Autor"
                                             FROM creche.anuncioturma
                                             LEFT JOIN creche.educador ON anuncioturma.idTurma = educador.idTurma
@@ -60,5 +52,31 @@ class AnnounceController extends BaseController
         }
 
         return ['adminAnnouncements' => $adminAnnouncements, 'classAnnouncements' => $classAnnouncements];
+    }
+
+    public function createAdminAnnouncement(Request $request)
+    {
+        $titulo = $request->input('titulo');
+        $descricao = $request->input('descricao');
+        $idAdmin = $request->input('idAdmin');
+
+        DB::table('anuncio')->insert([
+            'idAdministrador' => $idAdmin,
+            'descricao' => $descricao,
+            'titulo' => $titulo,
+        ]);
+    }
+
+    public function createClassAnnouncement(Request $request)
+    {
+        $titulo = $request->input('titulo');
+        $descricao = $request->input('descricao');
+        $idTurma = $request->input('idTurma');
+
+        DB::table('anuncioturma')->insert([
+            'idTurma' => $idTurma,
+            'descricao' => $descricao,
+            'titulo' => $titulo,
+        ]);
     }
 }

@@ -59,7 +59,7 @@ CREATE TABLE `anuncio` (
   UNIQUE KEY `idAnuncios_UNIQUE` (`idAnuncio`),
   KEY `fk_Anuncios_Administrador1_idx` (`idAdministrador`),
   CONSTRAINT `fk_Anuncios_Administrador1` FOREIGN KEY (`idAdministrador`) REFERENCES `administrador` (`idAdministrador`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `anuncio` (
 
 LOCK TABLES `anuncio` WRITE;
 /*!40000 ALTER TABLE `anuncio` DISABLE KEYS */;
-INSERT INTO `anuncio` VALUES (1,1,'Se você procura um ambiente acolhedor e educativo para o seu filho, não procure mais. Estamos aceitando inscrições para todas as idades. Agende uma visita à nossa creche para conhecer nossa equipe, instalações e descobrir como podemos fazer a diferença na vida do seu filho.','Ambiente'),(2,1,'A criatividade é o coração da nossa creche! Proporcionamos atividades educativas e lúdicas que incentivam o desenvolvimento cognitivo e emocional das crianças. Pintura, música, jogos - cada dia é uma oportunidade para aprender e se divertir!','Atividades Criativas');
+INSERT INTO `anuncio` VALUES (1,1,'Se você procura um ambiente acolhedor e educativo para o seu filho, não procure mais. Estamos aceitando inscrições para todas as idades. Agende uma visita à nossa creche para conhecer nossa equipe, instalações e descobrir como podemos fazer a diferença na vida do seu filho.','Ambiente'),(2,1,'A criatividade é o coração da nossa creche! Proporcionamos atividades educativas e lúdicas que incentivam o desenvolvimento cognitivo e emocional das crianças. Pintura, música, jogos - cada dia é uma oportunidade para aprender e se divertir!','Atividades Criativas'),(3,1,'Ola','Ola');
 /*!40000 ALTER TABLE `anuncio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +85,7 @@ CREATE TABLE `anuncioturma` (
   `descricao` mediumtext NOT NULL,
   `titulo` varchar(100) NOT NULL,
   PRIMARY KEY (`idanuncioTurma`,`idTurma`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `anuncioturma` (
 
 LOCK TABLES `anuncioturma` WRITE;
 /*!40000 ALTER TABLE `anuncioturma` DISABLE KEYS */;
-INSERT INTO `anuncioturma` VALUES (1,1,'Queridos Encarregados de Educação,\n\nÉ com grande entusiasmo que partilhamos as novidades empolgantes da nossa jornada educativa! Na qualidade de educadores dedicados, estamos empenhados em proporcionar uma experiência educacional significativa para os vossos queridos filhos.','Anúncio Especial para Encarregados de Educação');
+INSERT INTO `anuncioturma` VALUES (1,1,'Queridos Encarregados de Educação,\n\nÉ com grande entusiasmo que partilhamos as novidades empolgantes da nossa jornada educativa! Na qualidade de educadores dedicados, estamos empenhados em proporcionar uma experiência educacional significativa para os vossos queridos filhos.','Anúncio Especial para Encarregados de Educação'),(2,4,'Ola caros Encarregados de Educacao \n\nehehehhasfsodgnosidgnisodmgoismdgoimsdgoisopdgmiopsdmg','Mensagem de boas-vindas'),(3,1,'Bem vindos','Bem vindos');
 /*!40000 ALTER TABLE `anuncioturma` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,8 +263,8 @@ CREATE TABLE `educador` (
   UNIQUE KEY `contacto_UNIQUE` (`contacto`),
   KEY `fk_Educador_Turma1_idx` (`idTurma`),
   KEY `fk_Educador_Pessoa1_idx` (`ccPessoa`),
-  CONSTRAINT `fk_Educador_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
-  CONSTRAINT `fk_Educador_Turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`)
+  CONSTRAINT `ccPessoa` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
+  CONSTRAINT `idTurma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -274,7 +274,7 @@ CREATE TABLE `educador` (
 
 LOCK TABLES `educador` WRITE;
 /*!40000 ALTER TABLE `educador` DISABLE KEYS */;
-INSERT INTO `educador` VALUES (1,967883954,1598.5,1,164083702),(2,924866182,1023.88,2,154825342),(3,936249581,4323.89,3,147819490),(4,968232947,2547.81,3,172850580);
+INSERT INTO `educador` VALUES (1,967883954,1598.5,1,164083702),(2,924866182,1023.88,2,154825342),(3,936249581,4323.89,3,147819490),(4,968232947,2547.81,4,172850580);
 /*!40000 ALTER TABLE `educador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,4 +363,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-10  2:04:29
+-- Dump completed on 2023-12-12 22:48:36
