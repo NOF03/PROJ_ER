@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Image, StyleSheet, Text, View, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-export default function CardAnnounce({ item }) {
+export default function CardAnnounceClass({ item }) {
   const { colors } = useTheme();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -37,7 +37,7 @@ export default function CardAnnounce({ item }) {
     authorText: {
       fontSize: 14,
       fontWeight: 'bold',
-      color: 'red',
+      color: colors.primary,
       marginVertical: 8,
     },
     announcementText: {
@@ -69,7 +69,7 @@ export default function CardAnnounce({ item }) {
     },
     closeButton: {
       marginTop: 16,
-      backgroundColor: "red",
+      backgroundColor: colors.primary,
       padding: 8,
       borderRadius: 8,
       alignSelf: 'flex-start',
@@ -88,7 +88,7 @@ export default function CardAnnounce({ item }) {
           <View style={{ paddingHorizontal: 20, paddingVertical: 8 }}>
             <Text style={styles.titleText}>{item.Titulo}</Text>
             <View style={styles.line} />
-            <Text style={styles.authorText}>{item.Autor} | Admin</Text>
+            <Text style={styles.authorText}>{item.Autor} | Educador</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -103,9 +103,9 @@ export default function CardAnnounce({ item }) {
           <ScrollView contentContainerStyle={styles.modalContent}>
             <Image source={require('../assets/megafone.jpg')} style={styles.announcementImage} />
             <View style={{ paddingHorizontal: 20, paddingVertical: 8 }}>
-              <Text style={styles.titleTextModal}>{item.Titulo}</Text>
+              <Text style={styles.titleText}>{item.Titulo}</Text>
               <Text style={styles.announcementText}>{item.Anuncio}</Text>
-              <Text style={styles.authorText}>{item.Autor} | Admin</Text>
+              <Text style={styles.authorText}>{item.Autor} | Educador</Text>
             </View>
             <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
               <Text style={styles.closeButtonText}>Close</Text>

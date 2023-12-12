@@ -16,9 +16,41 @@ class AnnounceController extends BaseController
     public function SelectAnnouncements(Request $request)
     {
         $idTurma = $request->input('idTurma');
-        $adminAnnouncements = DB::select('SELECT pessoa.nome as "Autor", anuncio.descricao as "Anuncio", anuncio.titulo as "Titulo" FROM creche.anuncio, creche.administrador, creche.pessoa WHERE anuncio.idAdministrador=administrador.idAdministrador AND administrador.ccPessoa=pessoa.cartaoCidadao ORDER BY anuncio.idAnuncio DESC');
-        $classAnnouncements = DB::select('SELECT pessoa.nome as "Autor", anuncioturma.descricao as "Anuncio", anuncioturma.titulo as "Titulo" FROM creche.anuncioturma, creche.pessoa WHERE anuncioturma.idTurma= ? AND pessoa.cartaoCidadao', [$idTurma]);
-        return ['adminAnnouncements' => $adminAnnouncements];
+
+        $adminAnnouncements = DB::select('SELECT pessoa.nome as "Autor", anuncio.descricao as "Anuncio", anuncio.titulo as "Titulo" 
+                                            FROM creche.anuncio, creche.administrador, creche.pessoa 
+                                            WHERE anuncio.idAdministrador=administrador.idAdministrador AND administrador.ccPessoa=pessoa.cartaoCidadao 
+                                            ORDER BY anuncio.idAnuncio DESC');
+
+        $classAnnouncements = DB::select('SELECT anuncioturma.descricao as "Anuncio", anuncioturma.titulo as "Titulo", pessoa.nome as "Autor"
+                                            FROM creche.anuncioturma
+                                            LEFT JOIN creche.educador ON anuncioturma.idTurma = educador.idTurma
+                                            LEFT JOIN creche.pessoa ON educador.ccPessoa = pessoa.cartaoCidadao
+                                            WHERE anuncioturma.idTurma = ?
+                                            ORDER BY anuncioturma.idanuncioTurma DESC', [$idTurma]);
+
+
+        return ['adminAnnouncements' => $adminAnnouncements, 'classAnnouncements' => $classAnnouncements];
     }
-    
+
+    public function SelectAllAnnouncements()
+    {
+
+        $adminAnnouncements = DB::select('SELECT pessoa.nome as "Autor", anuncio.descricao as "Anuncio", anuncio.titulo as "Titulo" 
+                                            FROM creche.anuncio, creche.administrador, creche.pessoa 
+                                            WHERE anuncio.idAdministrador=administrador.idAdministrador AND administrador.ccPessoa=pessoa.cartaoCidadao 
+                                            ORDER BY anuncio.idAnuncio DESC');
+
+        foreach (DB::select('SELECT idTurma FROM creche.turma') as $turma) {
+
+            $classAnnouncements[$turma->idTurma] = DB::select('SELECT anuncioturma.descricao as "Anuncio", anuncioturma.titulo as "Titulo", pessoa.nome as "Autor"
+                                                        FROM creche.anuncioturma
+                                                        LEFT JOIN creche.educador ON anuncioturma.idTurma = educador.idTurma
+                                                        LEFT JOIN creche.pessoa ON educador.ccPessoa = pessoa.cartaoCidadao
+                                                        WHERE anuncioturma.idTurma = ?
+                                                        ORDER BY anuncioturma.idanuncioTurma DESC', [$turma->idTurma]);
+        }
+
+        return ['adminAnnouncements' => $adminAnnouncements, 'classAnnouncements' => $classAnnouncements];
+    }
 }
