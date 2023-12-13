@@ -29,7 +29,7 @@ class AnnounceController extends BaseController
                                             LEFT JOIN creche.educador ON anuncioturma.idTurma = educador.idTurma
                                             LEFT JOIN creche.pessoa ON educador.ccPessoa = pessoa.cartaoCidadao
                                             WHERE anuncioturma.idTurma = ?
-                                            ORDER BY anuncioturma.idanuncioTurma DESC', [$idTurma]);
+                                            ORDER BY anuncioturma.idanuncioTurma DESC', [$idTurma[0]]);
         return ['adminAnnouncements' => $adminAnnouncements, 'classAnnouncements' => $classAnnouncements];
     }
 
