@@ -17,6 +17,7 @@ const AnunciosScreen = () => {
   const { colors } = useTheme();
   const { user } = useUserContext();
   const acessToAll = user.role === "administrador" || user.role === "auxiliareducativo";
+  const acessToMultipleAnnonunces = user.role === "administrador" || user.role === "auxiliareducativo" || user.role === "encarregadoeducacao";
   const [newAnnouncementTitle, setNewAnnouncementTitle] = useState('');
   const [newAnnouncementDescription, setNewAnnouncementDescription] = useState('');
 
@@ -27,7 +28,7 @@ const AnunciosScreen = () => {
 
   const fetchAnnouncements = async () => {
     try {
-      const input = { idTurma: user.roleTraits.idTurma };
+      const input = user.role === "encarregadoeducacao" ? { idTurma: user.roleTraits.idCriancas } : { idTurma: user.roleTraits.idTurma };
       const requestOptions = acessToAll ? {} : {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -106,7 +107,7 @@ const AnunciosScreen = () => {
               showsHorizontalScrollIndicator={false}
             />
 
-            {!acessToAll ? (
+            {!acessToMultipleAnnonunces ? (
               <>
                 <Section color={colors.primary} content={"Anúncios Turma " + user.roleTraits.idTurma} />
                 <FlatList

@@ -19,4 +19,4 @@ Route::post('announcements/createClass', [AnnounceController::class, 'createClas
 
 Route::post('verifyIdentification', [UserController::class, 'verifyIdentification'])->withoutMiddleware([VerifyCsrfToken::class]);
 
-Route::post('/getChildrenData', [UserController::class, 'getChildrenData'])->withoutMiddleware([VerifyCsrfToken::class]);
+Route::post('getChildrenData', [UserController::class, 'getChildrenData'])->withoutMiddleware([VerifyCsrfToken::class]);

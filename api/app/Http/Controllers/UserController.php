@@ -31,11 +31,11 @@ class UserController extends BaseController
                     $roleCheck = $roleCheck[0];
                     if ($role === $roles[1]) {
                         $roleCheck->idCriancas = DB::table('creche.crianca')
-                        ->join('creche.crianca_has_encarregadoeducacao', 'creche.crianca_has_encarregadoeducacao.idCrianca', '=', 'creche.crianca.idCrianca')
-                        ->join('creche.encarregadoeducacao', 'creche.encarregadoeducacao.idEncarregado', '=', 'creche.crianca_has_encarregadoeducacao.idEncarregado')
-                        ->where('creche.encarregadoeducacao.idEncarregado', '=', $roleCheck->idEncarregado)
-                        ->pluck('creche.crianca.idCrianca as idCrianca')
-                        ->toArray();
+                                                    ->join('creche.crianca_has_encarregadoeducacao', 'creche.crianca_has_encarregadoeducacao.idCrianca', '=', 'creche.crianca.idCrianca')
+                                                    ->join('creche.encarregadoeducacao', 'creche.encarregadoeducacao.idEncarregado', '=', 'creche.crianca_has_encarregadoeducacao.idEncarregado')
+                                                    ->where('creche.encarregadoeducacao.idEncarregado', '=', $roleCheck->idEncarregado)
+                                                    ->pluck('creche.crianca.idCrianca as idCrianca')
+                                                    ->toArray();
                     }
                     return ['userExists' => true, 'user' => ['role' => $role, 'roleTraits' => $roleCheck, 'userInfo' => $userVerify[0]]];
                 }

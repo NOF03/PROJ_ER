@@ -22,9 +22,9 @@ export default function MenuLogin({navigation}) {
             body: JSON.stringify({ ccPessoa })
         };
         try {
-            
-            const response = await fetch(apiURL + '/verifyIdentification', requestOptions);
 
+            const response = await fetch(apiURL + '/verifyIdentification', requestOptions);
+  
             const data = await response.json();
             if (data.userExists) {
                 setUserContext(data.user);
