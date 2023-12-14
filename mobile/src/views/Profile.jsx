@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { SafeAreaView, View, Text, StyleSheet, ScrollView, Animated } from 'react-native';
 
 import { useUserContext } from '../components/UserContext'; 
 import { apiURL } from '../services/api';
@@ -8,6 +8,7 @@ export default function Profile() {
     const { user } = useUserContext(); 
     const [children, setChildren] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
+    
 
     useEffect(() => {
         if (user.role === 'encarregadoeducacao') { 
@@ -24,8 +25,6 @@ export default function Profile() {
     
         try {
             const response = await fetch(apiURL + '/getChildrenData', requestOptions);
-            
-            
             console.log('Status Code:', response.status);
     
             if (!response.ok) {
@@ -45,15 +44,17 @@ export default function Profile() {
         }
     };
     
-//295313546
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.contentContainer}>
                 <View style={styles.profileHeader}>
                     <View style={styles.profileImagePlaceholder} />
                     <Text style={styles.profileName}>{user?.userInfo.nome} | {user?.role}</Text>
+                    <Text style={styles.profileInfo}>Idade: {user?.userInfo.idade}</Text>
+                    {user?.roleTraits.contacto && <Text style={styles.profileInfo}>Contacto: {user?.roleTraits.contacto}</Text>}
+                    {user?.roleTraits.parentesco && <Text style={styles.profileInfo}>Parentesco: {user?.roleTraits.parentesco}</Text>}
                 </View>
-                {user.role === 'encarregadoeducacao' && ( 
+                {user.role === 'encarregadoeducacao' && (
                     <View style={styles.childrenSection}>
                         <Text style={styles.sectionTitle}>Crianças:</Text>
                         {children ? (
@@ -76,49 +77,78 @@ export default function Profile() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#000', // Fundo preto
+        backgroundColor: '#f0f4f7',
     },
     contentContainer: {
         padding: 16,
         alignItems: 'center',
     },
     profileHeader: {
+        width: '100%',
         alignItems: 'center',
         marginBottom: 20,
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+        elevation: 5,
+        padding: 15,
     },
     profileImagePlaceholder: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        backgroundColor: '#e0e0e0', // Cor neutra para o placeholder da imagem
-        marginBottom: 10,
+        width: 130,
+        height: 130,
+        borderRadius: 65,
+        backgroundColor: '#e0e0e0',
+        marginBottom: 12,
+        borderWidth: 3,
+        borderColor: '#d4d4d4',
     },
     profileName: {
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: 'bold',
-        color: '#fff', // Nome em branco
+        color: '#364f6b',
+    },
+    profileInfo: {
+        fontSize: 16,
+        color: '#555',
+        marginTop: 5,
+        marginBottom: 3,
     },
     childrenSection: {
         width: '100%',
-        marginTop: 20,
+        marginTop: 25,
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+        elevation: 5,
+        padding: 15,
     },
     sectionTitle: {
-        fontSize: 18,
+        fontSize: 19,
         fontWeight: 'bold',
-        color: '#fff', // Título da seção em branco
-        marginBottom: 10,
+        color: '#364f6b',
+        marginBottom: 12,
     },
     childName: {
         fontSize: 16,
-        color: '#fff', // Nomes das crianças em branco
+        color: '#555',
+        marginTop: 6,
+        marginBottom: 4,
     },
     noChildrenText: {
         fontStyle: 'italic',
-        color: '#999', // Texto informativo
+        color: '#999',
+        fontSize: 15,
     },
     errorText: {
-        color: 'red',
+        color: '#d9534f',
         marginTop: 10,
         textAlign: 'center',
+        fontSize: 16,
     }
 });
