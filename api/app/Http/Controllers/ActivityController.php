@@ -66,16 +66,28 @@ class ActivityController extends BaseController
             );
     }
 
+    public function deleteClassActivity(Request $request)
+    {
+        $idAtividade = $request->input('idAtividade');
+
+        DB::table('atividade')->where(['idAtividade' => $idAtividade])->delete();
+    }
+
     public function showAllClassChildren(Request $request)
     {
         $idTurma = $request->input('idTurma');
 
-        $children = DB::select('SELECT pessoa.cartaoCidadao AS "CartaoCidadao", pessoa.nome AS "Nome"
+
+        $children = DB::select('SELECT pessoa.cartaoCidadao AS "CartaoCidadao", pessoa.nome AS "Nome", crianca.idCrianca AS "Id"
         FROM creche.pessoa, creche.crianca
         WHERE pessoa.cartaoCidadao = crianca.ccPessoa 
         AND crianca.idTurma = ?
         ORDER BY pessoa.nome', [$idTurma]);
 
+
+
         return ['turma' => $children];
     }
+
+    
 }

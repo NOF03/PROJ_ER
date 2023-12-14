@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function CardActivity({ item, acesso, onEdit }) {
+export default function CardActivity({ item, acesso, onEdit, onDelete }) {
     const { colors } = useTheme();
 
     const styles = StyleSheet.create({
@@ -40,11 +40,14 @@ export default function CardActivity({ item, acesso, onEdit }) {
                 <Text style={styles.durationText}>Duração: {item.duracao} minutos</Text>
             </View>
             {acesso ? (
-                <View style= {{flexDirection: 'row', gap: 20}}>
+                <View style={{ flexDirection: 'row', gap: 20 }}>
                     <TouchableOpacity onPress={() => onEdit(item)}>
                         <Icon name="pencil" style={styles.icon} />
                     </TouchableOpacity>
-                    <Icon name="trash-o" style={{ fontSize: 22, color: 'red' }} /></View>
+                    <TouchableOpacity onPress={() => onDelete(item)}>
+                        <Icon name="trash-o" style={{ fontSize: 22, color: 'red' }}/>
+                    </TouchableOpacity>
+                </View>
             ) : (
                 <Icon name="eye" style={styles.icon} />
             )}

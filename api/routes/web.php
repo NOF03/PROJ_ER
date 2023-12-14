@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\AnnounceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActivityController;
-
+use App\Http\Controllers\EvaluationController;
 use App\Http\Middleware\VerifyCsrfToken;
 
 
@@ -21,7 +21,11 @@ Route::post('announcements/createClass', [AnnounceController::class, 'createClas
 Route::get('activities', [ActivityController::class, 'showAllActivitiesClass'])->withoutMiddleware([VerifyCsrfToken::class]);
 Route::post('activities', [ActivityController::class, 'showActivitiesClass'])->withoutMiddleware([VerifyCsrfToken::class]);
 Route::post('activities/create', [ActivityController::class, 'createActivityClass'])->withoutMiddleware([VerifyCsrfToken::class]);
+Route::post('activities/delete', [ActivityController::class, 'deleteClassActivity'])->withoutMiddleware([VerifyCsrfToken::class]);
 Route::post('activities/showChildren', [ActivityController::class, 'showAllClassChildren'])->withoutMiddleware([VerifyCsrfToken::class]);
+
+Route::post('evaluation/create', [EvaluationController::class, 'registerEvaluation'])->withoutMiddleware([VerifyCsrfToken::class]);
+Route::post('evaluation/verify', [EvaluationController::class, 'verifyChildEvaluationOnActivity'])->withoutMiddleware([VerifyCsrfToken::class]);
 
 Route::post('verifyIdentification', [UserController::class, 'verifyIdentification'])->withoutMiddleware([VerifyCsrfToken::class]);
 

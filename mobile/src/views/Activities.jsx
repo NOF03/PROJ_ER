@@ -59,6 +59,29 @@ const Activities = () => {
         setObjetivo(activity.objetivo);
     };
 
+    const handleDeleteActivity = async (activity) => {
+        const requestOptions =
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idAtividade: activity.idAtividade }),
+        };
+
+        try {
+
+            const response = await fetch(apiURL + '/activities/delete', requestOptions);
+ 
+            if (response.ok) {
+                console.log("Atividade removida!");
+                setBotaoRegistar(false);
+                setBotaoRegistar(true);
+            }
+
+        } catch (error) {
+            console.error('Erro ao buscar atividades:', error);
+        }
+    }
+
     const handleAvaliacao = async (child) => {
         setSelectedChild(child);
 
@@ -127,22 +150,22 @@ const Activities = () => {
                 const data = await response.json();
                 console.log(data.turma);
                 setCriancas(data.turma);
-            }
+            } 
         } catch (error) {
             console.error('Erro ao buscar atividades:', error);
         }
     }
 
     const renderActivitiestItemClass = ({ item }) => (
-        <CardActivity item={item} acesso={acessoRegisto} onEdit={handleEditActivity} />
+        <CardActivity item={item} acesso={acessoRegisto} onEdit={handleEditActivity} onDelete={handleDeleteActivity}/>
     );
 
     const renderChildrenItemClass = ({ item }) => (
-        <CardChild item={item} emAvalicao={handleAvaliacao}/>
+        <CardChild item={item} emAvalicao={handleAvaliacao} activity={selectedActivity}/>
     )
 
     const Section = ({ color, content }) => (
-        <View style={{ backgroundColor: color, borderRadius: 8, marginVertical: 12, padding: 16, marginBottom: 3 }}>
+        <View style={{ backgroundColor: color, borderRadius: 8, marginVertical: 12, padding: 16 }}>
             <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{content}</Text>
         </View>
     );
