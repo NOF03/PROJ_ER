@@ -102,7 +102,6 @@ export default function CardAnnounce({ item }) {
       >
         <View style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.modalContent}>
-            <Image source={require('../assets/megafone.jpg')} style={styles.announcementImage} />
             <View style={{ paddingHorizontal: 20, paddingVertical: 8 }}>
               <Text style={styles.titleTextModal}>{item.Titulo}</Text>
               <Text style={styles.announcementText}>{item.Anuncio}</Text>

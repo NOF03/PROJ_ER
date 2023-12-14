@@ -7,6 +7,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Http\Request;
+
 class ActivityController extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
@@ -19,5 +21,61 @@ class ActivityController extends BaseController
         }
         return view('welcome');
     }
-    
+
+    public function showActivitiesClass(Request $request)
+    {
+        $idTurma = $request->input('idTurma');
+
+        $activities[$idTurma] = DB::select('SELECT * FROM creche.atividade WHERE atividade.idTurma = ?', [$idTurma]);
+
+        return ['activities' => $activities];
+    }
+
+    public function showAllActivitiesClass()
+    {
+
+        foreach (DB::select('SELECT idTurma FROM creche.turma') as $turma) {
+            $activities[$turma->idTurma] = DB::select('SELECT * FROM creche.atividade WHERE atividade.idTurma = ?', [$turma->idTurma]);
+        }
+
+        return ['activities' => $activities];
+    }
+
+    public function createActivityClass(Request $request)
+    {
+        $nomeAtividade = $request->input('nomeAtividade');
+        $duracao = $request->input('duracao');
+        $descricao = $request->input('descricao');
+        $objetivo = $request->input('objetivo');
+        $idTurma = $request->input('idTurma');
+        $idAtividade = $request->input('idAtividade');
+
+        DB::table('atividade')
+            ->updateOrInsert(
+                [
+                    "idAtividade" => $idAtividade,
+                ],
+                [
+                    "nome" => $nomeAtividade,
+                    "idTurma" => $idTurma,
+                    "data" => DB::raw("CURDATE()"),
+                    "duracao" => $duracao,
+                    "descricao" => $descricao,
+                    "objetivo" => $objetivo,
+                ]
+            );
+    }
+
+    public function showAllClassChildren(Request $request)
+    {
+        $idTurma = $request->input('idTurma');
+
+        $children = DB::select('SELECT pessoa.cartaoCidadao AS "CartaoCidadao", pessoa.nome AS "Nome"
+        FROM creche.pessoa, creche.crianca
+        WHERE pessoa.cartaoCidadao = crianca.ccPessoa 
+        AND crianca.idTurma = ?
+        ORDER BY pessoa.nome', [$idTurma]);
+
+        return ['turma' => $children];
+    }
 }

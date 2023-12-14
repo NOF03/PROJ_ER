@@ -1,45 +1,148 @@
-import React, { useState } from 'react';
-
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
+import { View, TextInput, Button, StyleSheet, Text, FlatList } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-
 import { useUserContext } from '../components/UserContext';
-
 import { apiURL } from '../services/api';
+import CardActivity from '../components/CardActivity';
+import CardChild from '../components/CardChild';
 
 const Activities = () => {
     const { colors } = useTheme();
 
     const [botaoRegistar, setBotaoRegistar] = useState(true);
-
+    const [emEdicao, setEmEdicao] = useState(false);
     const [nomeAtividade, setNomeAtividade] = useState('');
     const [duracao, setDuracao] = useState('');
     const [descricao, setDescricao] = useState('');
     const [objetivo, setObjetivo] = useState('');
-
+    const [atividades, setAtividades] = useState(null);
+    const [selectedActivity, setSelectedActivity] = useState(null);
+    const [criancas, setCriancas] = useState(null);
+    const [emAvalicao, setEmAvaliacao] = useState(null);
+    const [selectedChild, setSelectedChild] = useState(null);
 
     const { user } = useUserContext();
-    const acessoRegisto = user.role === "educador"
+    const acessoRegisto = user.role === 'educador';
+
+    useEffect(() => {
+        fetchActivities(); 
+        
+    }, [botaoRegistar]);
+
+    useEffect(() => {
+        fetchCriancas();
+    }, [])
 
     const handleBotaoRegistar = () => {
         setBotaoRegistar(false);
+        setEmEdicao(false)
     };
 
     const handleBotaoVoltar = () => {
         setBotaoRegistar(true);
         setNomeAtividade('');
-        setDuracao('');
+        setDuracao(0);
         setDescricao('');
         setObjetivo('');
+        setSelectedActivity(null);
+    };
+
+    const handleEditActivity = async (activity) => {
+
+        setSelectedActivity(activity)
+        setBotaoRegistar(false);
+        setEmEdicao(true)
+
+        setNomeAtividade(activity.nome);
+        setDuracao(activity.duracao.toString());
+        setDescricao(activity.descricao);
+        setObjetivo(activity.objetivo);
+    };
+
+    const handleAvaliacao = async (child) => {
+        setSelectedChild(child);
+
+        setEmAvaliacao(child.avaliacao);
     }
 
-    const handleBotaoInserir = () => {
+    const handleRegistarAtividade = async () => {
+        const requestOptions =
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idTurma: user.roleTraits.idTurma, nomeAtividade, duracao, descricao, objetivo, idAtividade: selectedActivity?.idAtividade }),
+        };
 
+        try {
+
+            const response = await fetch(apiURL + '/activities/create', requestOptions);
+ 
+            if (response.ok) {
+                console.log("Atividade adicionada!");
+                setBotaoRegistar(true);
+                setEmEdicao(false);
+            }
+
+        } catch (error) {
+            console.error('Erro ao buscar atividades:', error);
+        }
     }
+
+    const fetchActivities = async () => {
+        try {
+            const requestOptions =
+                user.role === 'administrador'
+                    ? {}
+                    : {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ idTurma: user.roleTraits.idTurma }),
+                    };
+
+            const response = await fetch(apiURL + '/activities', requestOptions);
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                setAtividades(data.activities);
+            }
+        } catch (error) {
+            console.error('Erro ao buscar atividades:', error);
+        }
+    };
+
+    const fetchCriancas = async () => {
+        try {
+            const requestOptions =
+                user.role === 'administrador' ? {} :
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ idTurma: user.roleTraits.idTurma }),
+                    };
+
+            const response = await fetch(apiURL + '/activities/showChildren', requestOptions);
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data.turma);
+                setCriancas(data.turma);
+            }
+        } catch (error) {
+            console.error('Erro ao buscar atividades:', error);
+        }
+    }
+
+    const renderActivitiestItemClass = ({ item }) => (
+        <CardActivity item={item} acesso={acessoRegisto} onEdit={handleEditActivity} />
+    );
+
+    const renderChildrenItemClass = ({ item }) => (
+        <CardChild item={item} emAvalicao={handleAvaliacao}/>
+    )
 
     const Section = ({ color, content }) => (
-        <View style={{ backgroundColor: color, borderRadius: 8, marginVertical: 12, padding: 16 }}>
+        <View style={{ backgroundColor: color, borderRadius: 8, marginVertical: 12, padding: 16, marginBottom: 3 }}>
             <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{content}</Text>
         </View>
     );
@@ -48,15 +151,12 @@ const Activities = () => {
         <View style={{ padding: 16, marginBottom: 60 }}>
             {botaoRegistar && acessoRegisto ? (
                 <View style={styles.atividadesContainer}>
-                    <Button
-                        title="Registar Atividade"
-                        color={colors.primary}
-                        onPress={handleBotaoRegistar}
-                    />
+                    <Button title="Registar Atividade" color={colors.primary} onPress={handleBotaoRegistar} />
                 </View>
             ) : (
-                acessoRegisto && (
+                !botaoRegistar && !emEdicao && (
                     <View style={styles.inputContainer}>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, textAlign: 'center' }}>Registar Atividade</Text>
                         <TextInput
                             style={styles.input}
                             placeholder="Nome da Atividade"
@@ -83,16 +183,9 @@ const Activities = () => {
                         />
                         <View style={styles.botoes}>
                             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-                                <Button
-                                    title="Voltar"
-                                    color={colors.red}
-                                    onPress={handleBotaoVoltar}
-                                />
+                                <Button title="Cancelar Registo" color={'red'} onPress={handleBotaoVoltar} />
                                 <View style={{ marginLeft: 10 }}>
-                                    <Button
-                                        title="Inserir Atividade"
-                                        color={colors.primary}
-                                    />
+                                    <Button title="Inserir Atividade" color={colors.primary} onPress={handleRegistarAtividade} />
                                 </View>
                             </View>
                         </View>
@@ -100,12 +193,70 @@ const Activities = () => {
                 )
             )}
 
-            {botaoRegistar && (
-                <View>
-                    <Section color="red" content={`Atividades Turma ${user.roleTraits[0].idTurma}`} />
-                </View>
-            )}
+            {botaoRegistar && atividades && Object.entries(atividades).map(([idTurma, data]) => (
+                <React.Fragment key={idTurma}>
+                    <Section color={'red'} content={`Atividades Turma ` + idTurma} />
+                    <FlatList
+                        data={data}
+                        keyExtractor={(item, subIndex) => subIndex.toString()}
+                        renderItem={renderActivitiestItemClass}
+                        style={{ width: '100%' }}
+                    />
+                </React.Fragment>
+            ))}
 
+            {!botaoRegistar && emEdicao && selectedActivity && (
+                <>
+                    <View style={styles.inputContainer}>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, textAlign: 'center' }}>Editar Atividade</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Nome da Atividade"
+                            value={nomeAtividade}
+                            onChangeText={(text) => setNomeAtividade(text)}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Duração (em minutos)"
+                            value={duracao}
+                            onChangeText={(text) => setDuracao(text)}
+                            keyboardType="numeric"
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Descrição"
+                            value={descricao}
+                            onChangeText={(text) => setDescricao(text)}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Objetivo"
+                            value={objetivo}
+                            onChangeText={(text) => setObjetivo(text)}
+                        />
+                        <View style={styles.botoes}>
+                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                <Button title="Cancelar Edição" color={'red'} onPress={handleBotaoVoltar} />
+                                <View style={{ marginLeft: 10 }}>
+                                    <Button title="Salvar Edição" color={colors.primary} onPress={handleRegistarAtividade} />
+                                </View>
+                                
+                            </View>
+                        </View>
+                    </View>
+                    <View>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, textAlign: 'center', marginTop: 30 }}>Avaliação</Text>
+                        {criancas && <>
+                            <FlatList
+                                data={criancas}
+                                keyExtractor={(item, subIndex) => subIndex.toString()}
+                                renderItem={renderChildrenItemClass}
+                            />
+                        </>}
+
+                    </View>
+                </>
+            )}
         </View>
     );
 };
@@ -116,22 +267,22 @@ const styles = StyleSheet.create({
     atividadesContainer: {
         alignItems: 'center',
         padding: 16,
-        marginTop: 20
+        marginTop: 20,
     },
     inputContainer: {
         width: '100%',
         paddingHorizontal: 15,
-        marginTop: 30
+        marginTop: 30,
     },
     input: {
         borderColor: 'gray',
         borderWidth: 1,
         height: 40,
-        marginBottom: 10
+        marginBottom: 10,
     },
     botoes: {
         marginTop: 16,
         flexDirection: 'row',
         justifyContent: 'center',
-    }
+    },
 });

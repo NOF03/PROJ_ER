@@ -57,7 +57,6 @@ export default function CardAnnounceClass({ item }) {
       marginVertical: 8,
     },
     modalContainer: {
-      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
@@ -83,7 +82,7 @@ export default function CardAnnounceClass({ item }) {
   });
 
   return (
-    <View>
+    <>
       <TouchableOpacity activeOpacity={0.4} onPress={toggleModal}>
         <View style={styles.announcementItem}>
           <Image source={require('../assets/green-info.png')} style={styles.announcementImage} />
@@ -115,6 +114,6 @@ export default function CardAnnounceClass({ item }) {
           </ScrollView>
         </View>
       </Modal>
-    </View>
+    </>
   );
 }
