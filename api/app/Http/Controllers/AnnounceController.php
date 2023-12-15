@@ -21,38 +21,37 @@ class AnnounceController extends BaseController
                                             ORDER BY anuncio.idAnuncio DESC');
 
 
-$idTurmas = $request->input('idTurma');
+        $idTurmas = $request->input('idTurma');
 
-// Ensure $idTurmas is an array
-if (is_array($idTurmas)) {
-    $classAnnouncements = [];
-    $idCriancas = $idTurmas;
-    foreach ($idCriancas as $idCrianca) {
-        $childrenData = DB::select("SELECT pessoa.nome, pessoa.idade, crianca.idTurma FROM pessoa, crianca WHERE crianca.ccPessoa=pessoa.cartaoCidadao AND crianca.idCrianca = ?",[$idCrianca]);
-        $getChildren[$idCrianca] = $childrenData[0];
-    };
-    // Iterate through each idTurma in the array
-    foreach ($getChildren as $children) {
-        $classAnnouncements[$children->idTurma] = DB::select('SELECT anuncioturma.descricao as "Anuncio", anuncioturma.titulo as "Titulo", pessoa.nome as "Autor"
+        // Ensure $idTurmas is an array
+        if (is_array($idTurmas)) {
+            $classAnnouncements = [];
+            $idCriancas = $idTurmas;
+            foreach ($idCriancas as $idCrianca) {
+                $childrenData = DB::select("SELECT pessoa.nome, pessoa.idade, crianca.idTurma FROM pessoa, crianca WHERE crianca.ccPessoa=pessoa.cartaoCidadao AND crianca.idCrianca = ?", [$idCrianca]);
+                $getChildren[$idCrianca] = $childrenData[0];
+            };
+            // Iterate through each idTurma in the array
+            foreach ($getChildren as $children) {
+                $classAnnouncements[$children->idTurma] = DB::select('SELECT anuncioturma.descricao as "Anuncio", anuncioturma.titulo as "Titulo", pessoa.nome as "Autor"
                                 FROM creche.anuncioturma
                                 LEFT JOIN creche.educador ON anuncioturma.idTurma = educador.idTurma
                                 LEFT JOIN creche.pessoa ON educador.ccPessoa = pessoa.cartaoCidadao
                                 WHERE anuncioturma.idTurma = ?
                                 ORDER BY anuncioturma.idanuncioTurma DESC', [$children->idTurma]);
-
-    }
-} else {
-    // Handle the case when $idTurmas is not an array (single value)
-    $classAnnouncements = DB::select('SELECT anuncioturma.descricao as "Anuncio", anuncioturma.titulo as "Titulo", pessoa.nome as "Autor"
+            }
+        } else {
+            // Handle the case when $idTurmas is not an array (single value)
+            $classAnnouncements = DB::select('SELECT anuncioturma.descricao as "Anuncio", anuncioturma.titulo as "Titulo", pessoa.nome as "Autor"
                                         FROM creche.anuncioturma
                                         LEFT JOIN creche.educador ON anuncioturma.idTurma = educador.idTurma
                                         LEFT JOIN creche.pessoa ON educador.ccPessoa = pessoa.cartaoCidadao
                                         WHERE anuncioturma.idTurma = ?
                                         ORDER BY anuncioturma.idanuncioTurma DESC', [$idTurmas]);
-}
+        }
 
-// Now $classAnnouncements contains the results for all idTurmas
-// Handle or use $classAnnouncements as needed in your code
+        // Now $classAnnouncements contains the results for all idTurmas
+        // Handle or use $classAnnouncements as needed in your code
 
         return ['adminAnnouncements' => $adminAnnouncements, 'classAnnouncements' => $classAnnouncements];
     }

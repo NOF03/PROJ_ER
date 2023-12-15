@@ -5,7 +5,7 @@ import { SafeAreaView, Text } from 'react-native';
 export default function News() {
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{ flex: 1 }}>
             <Text>
                 News
             </Text>

@@ -11,7 +11,7 @@ use App\Http\Middleware\VerifyCsrfToken;
 
 
 Route::get('/', [Controller::class, 'testConnection']);
-Route::get('hello',[Controller::class, 'index']);
+Route::get('hello', [Controller::class, 'index']);
 
 Route::get('announcements', [AnnounceController::class, 'SelectAllAnnouncements']);
 Route::post('announcements', [AnnounceController::class, 'SelectAnnouncements'])->withoutMiddleware([VerifyCsrfToken::class]);

@@ -88,6 +88,4 @@ class ActivityController extends BaseController
 
         return ['turma' => $children];
     }
-
-    
 }

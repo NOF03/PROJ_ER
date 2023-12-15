@@ -83,7 +83,7 @@ export default function CardChild({ item, onPress, activity }) {
         try {
             const response = await fetch(apiURL + '/evaluation/create', requestOptions);
 
-            if (response.ok){
+            if (response.ok) {
                 toggleModal();
                 console.log("Avaliação Inserida com sucesso!")
             }
@@ -111,7 +111,7 @@ export default function CardChild({ item, onPress, activity }) {
                     <ScrollView>
                         <View style={{ paddingHorizontal: 15, paddingVertical: 30 }}>
                             <Text>Avaliação da criança [1-5]:</Text>
-                            <TextInput placeholder='' value={avaliacao} onChangeText={(text) => setAvaliacao(text)} keyboardType='numeric'  style={{
+                            <TextInput placeholder='' value={avaliacao} onChangeText={(text) => setAvaliacao(text)} keyboardType='numeric' style={{
                                 borderColor: 'gray',
                                 borderWidth: 1,
                                 height: 40,

@@ -111,15 +111,13 @@ CREATE TABLE `atividade` (
   `duracao` int NOT NULL,
   `descricao` varchar(45) NOT NULL,
   `objetivo` varchar(45) NOT NULL,
-  `idEducador` int NOT NULL,
   `idTurma` int unsigned NOT NULL,
-  PRIMARY KEY (`idAtividade`,`idEducador`,`idTurma`),
+  `data` date DEFAULT (curdate()),
+  PRIMARY KEY (`idAtividade`,`idTurma`),
   UNIQUE KEY `idAtividade_UNIQUE` (`idAtividade`),
   KEY `fk_Atividade_Turma1_idx` (`idTurma`),
-  KEY `fk_Atividade_Educador1_idx` (`idEducador`),
-  CONSTRAINT `fk_Atividade_Educador1` FOREIGN KEY (`idEducador`) REFERENCES `educador` (`idEducador`),
   CONSTRAINT `fk_Atividade_Turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,6 +126,7 @@ CREATE TABLE `atividade` (
 
 LOCK TABLES `atividade` WRITE;
 /*!40000 ALTER TABLE `atividade` DISABLE KEYS */;
+INSERT INTO `atividade` VALUES (1,'Futebolada',98,'Quinta de Sao Roque','Jogarem a bola',1,'2023-12-14'),(2,'Basquetebolada',120,'Quinta de Sao Roque','Jogarem a bola',1,'2023-12-13');
 /*!40000 ALTER TABLE `atividade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +167,7 @@ DROP TABLE IF EXISTS `avaliacao`;
 CREATE TABLE `avaliacao` (
   `idAvaliacao` int NOT NULL AUTO_INCREMENT,
   `nota` varchar(45) NOT NULL,
-  `observacao` varchar(45) DEFAULT NULL,
+  `observacao` mediumtext,
   `data` datetime NOT NULL,
   `idCrianca` int NOT NULL,
   `idAtividade` int unsigned NOT NULL,
@@ -177,7 +176,7 @@ CREATE TABLE `avaliacao` (
   KEY `fk_Avaliacao_Atividade1_idx` (`idAtividade`),
   CONSTRAINT `fk_Avaliacao_Atividade1` FOREIGN KEY (`idAtividade`) REFERENCES `atividade` (`idAtividade`),
   CONSTRAINT `fk_Avaliacao_Crianca1` FOREIGN KEY (`idCrianca`) REFERENCES `crianca` (`idCrianca`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,6 +185,7 @@ CREATE TABLE `avaliacao` (
 
 LOCK TABLES `avaliacao` WRITE;
 /*!40000 ALTER TABLE `avaliacao` DISABLE KEYS */;
+INSERT INTO `avaliacao` VALUES (1,'4','Muito divertido','2023-12-14 00:00:00',3,1);
 /*!40000 ALTER TABLE `avaliacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +242,7 @@ CREATE TABLE `crianca_has_encarregadoeducacao` (
 
 LOCK TABLES `crianca_has_encarregadoeducacao` WRITE;
 /*!40000 ALTER TABLE `crianca_has_encarregadoeducacao` DISABLE KEYS */;
-INSERT INTO `crianca_has_encarregadoeducacao` VALUES (1,1);
+INSERT INTO `crianca_has_encarregadoeducacao` VALUES (1,1),(7,2);
 /*!40000 ALTER TABLE `crianca_has_encarregadoeducacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +265,7 @@ CREATE TABLE `educador` (
   KEY `fk_Educador_Pessoa1_idx` (`ccPessoa`),
   CONSTRAINT `ccPessoa` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
   CONSTRAINT `idTurma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,7 +274,7 @@ CREATE TABLE `educador` (
 
 LOCK TABLES `educador` WRITE;
 /*!40000 ALTER TABLE `educador` DISABLE KEYS */;
-INSERT INTO `educador` VALUES (1,967883954,1598.5,1,164083702),(2,924866182,1023.88,2,154825342),(3,936249581,4323.89,3,147819490),(4,968232947,2547.81,4,172850580);
+INSERT INTO `educador` VALUES (1,967883954,1598.5,1,164083702),(2,924866182,1023.88,2,154825342),(3,936249581,4323.89,3,147819490),(4,968232947,2547.81,4,172850580),(5,964783940,7000,1,1);
 /*!40000 ALTER TABLE `educador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,6 +307,32 @@ INSERT INTO `encarregadoeducacao` VALUES (1,'936790183','PAI',295313546),(2,'936
 UNLOCK TABLES;
 
 --
+-- Table structure for table `mensagem`
+--
+
+DROP TABLE IF EXISTS `mensagem`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mensagem` (
+  `idmensagem` int NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(3000) NOT NULL,
+  `idSala` int NOT NULL,
+  PRIMARY KEY (`idmensagem`),
+  KEY `fk_sala_idx` (`idSala`),
+  CONSTRAINT `fk_sala` FOREIGN KEY (`idSala`) REFERENCES `sala` (`idsala`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mensagem`
+--
+
+LOCK TABLES `mensagem` WRITE;
+/*!40000 ALTER TABLE `mensagem` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mensagem` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pessoa`
 --
 
@@ -327,8 +353,59 @@ CREATE TABLE `pessoa` (
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
-INSERT INTO `pessoa` VALUES (101866776,'Marta Silva',22),(111306120,'Luís Mendes',34),(114937360,'Mariano Fernandes',2),(117082778,'Rui Oliveira',40),(137498006,'Leonor Mendes',2),(147819490,'José Costa',27),(154825342,'Pedro Martins',29),(164083702,'Carlos Pereira',35),(171812432,'Daniel Sousa',0),(172850580,'Ana Santos',28),(175156429,'Beatriz Sousa',26),(179168908,'Mariana Oliveira',0),(179813564,'Catarina Fernandes',32),(189648359,'Tomás Santos',1),(199656762,'Sofia Almeida',31),(204621455,'Tiago Santos',30),(213508244,'Francisco Martins',1),(213757233,'Isabel Pereira',37),(221388237,'Miguel Oliveira',24),(223056814,'Ana Pereira',0),(231060989,'Raquel Fernandes',31),(231061319,'Inês Rodrigues',33),(238714575,'Ricardo Silva',2),(253638596,'Cátia Silva',23),(260100048,'João Sousa',28),(269364312,'Gonçalo Almeida',35),(281835582,'Ana Costa',29),(294388767,'Carolina Almeida',2),(295313546,'Hugo Martins',26),(295807548,'Lara Costa',1);
+INSERT INTO `pessoa` VALUES (1,'Horacio Drummond',53),(101866776,'Marta Silva',22),(111306120,'Luís Mendes',34),(114937360,'Mariano Fernandes',2),(117082778,'Rui Oliveira',40),(137498006,'Leonor Mendes',2),(147819490,'José Costa',27),(154825342,'Pedro Martins',29),(164083702,'Carlos Pereira',35),(171812432,'Daniel Sousa',0),(172850580,'Ana Santos',28),(175156429,'Beatriz Sousa',26),(179168908,'Mariana Oliveira',0),(179813564,'Catarina Fernandes',32),(189648359,'Tomás Santos',1),(199656762,'Sofia Almeida',31),(204621455,'Tiago Santos',30),(213508244,'Francisco Martins',1),(213757233,'Isabel Pereira',37),(221388237,'Miguel Oliveira',24),(223056814,'Ana Pereira',0),(231060989,'Raquel Fernandes',31),(231061319,'Inês Rodrigues',33),(238714575,'Ricardo Silva',2),(253638596,'Cátia Silva',23),(260100048,'João Sousa',28),(269364312,'Gonçalo Almeida',35),(281835582,'Ana Costa',29),(294388767,'Carolina Almeida',2),(295313546,'Hugo Martins',26),(295807548,'Lara Costa',1);
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sala`
+--
+
+DROP TABLE IF EXISTS `sala`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sala` (
+  `idsala` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idsala`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sala`
+--
+
+LOCK TABLES `sala` WRITE;
+/*!40000 ALTER TABLE `sala` DISABLE KEYS */;
+INSERT INTO `sala` VALUES (5);
+/*!40000 ALTER TABLE `sala` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sala_has_pessoa`
+--
+
+DROP TABLE IF EXISTS `sala_has_pessoa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sala_has_pessoa` (
+  `idSala` int NOT NULL,
+  `ccPessoa` int unsigned NOT NULL,
+  PRIMARY KEY (`idSala`,`ccPessoa`),
+  KEY `fk_sala_has_pessoa_sala1_idx` (`idSala`),
+  KEY `fk_sala_has_pessoa_pessoa1_idx` (`ccPessoa`),
+  CONSTRAINT `fk_sala_has_pessoa_pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
+  CONSTRAINT `fk_sala_has_pessoa_sala` FOREIGN KEY (`idSala`) REFERENCES `sala` (`idsala`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sala_has_pessoa`
+--
+
+LOCK TABLES `sala_has_pessoa` WRITE;
+/*!40000 ALTER TABLE `sala_has_pessoa` DISABLE KEYS */;
+INSERT INTO `sala_has_pessoa` VALUES (5,1),(5,164083702),(5,213757233),(5,231060989),(5,231061319),(5,281835582);
+/*!40000 ALTER TABLE `sala_has_pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -363,4 +440,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-12 22:48:36
+-- Dump completed on 2023-12-15 15:43:37

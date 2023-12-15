@@ -8,7 +8,7 @@ import { apiURL } from '../services/api';
 
 import { useUserContext } from '../components/UserContext';
 
-export default function MenuLogin({navigation}) {
+export default function MenuLogin({ navigation }) {
 
     const [ccPessoa, setCcPessoa] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -24,7 +24,7 @@ export default function MenuLogin({navigation}) {
         try {
 
             const response = await fetch(apiURL + '/verifyIdentification', requestOptions);
-  
+
             const data = await response.json();
             if (data.userExists) {
                 setUserContext(data.user);
@@ -32,21 +32,18 @@ export default function MenuLogin({navigation}) {
             } else {
                 setErrorMessage('Número não consta na base de dados');
             }
-           
-        
+
+
         } catch (networkError) {
             console.error('Network Error:', networkError);
             setErrorMessage('Ocorreu um erro de rede ao verificar a identificação.');
         }
     };
-    
-    
-
 
 
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/linkgov.png')} style={{resizeMode: 'center'}}/>
+            <Image source={require('../assets/linkgov.png')} style={{ resizeMode: 'center' }} />
             <TextInput
                 style={styles.input}
                 onChangeText={text => setCcPessoa(text)}

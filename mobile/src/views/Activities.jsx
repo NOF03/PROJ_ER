@@ -25,8 +25,8 @@ const Activities = () => {
     const acessoRegisto = user.role === 'educador';
 
     useEffect(() => {
-        fetchActivities(); 
-        
+        fetchActivities();
+
     }, [botaoRegistar]);
 
     useEffect(() => {
@@ -70,7 +70,7 @@ const Activities = () => {
         try {
 
             const response = await fetch(apiURL + '/activities/delete', requestOptions);
- 
+
             if (response.ok) {
                 console.log("Atividade removida!");
                 setBotaoRegistar(false);
@@ -99,7 +99,7 @@ const Activities = () => {
         try {
 
             const response = await fetch(apiURL + '/activities/create', requestOptions);
- 
+
             if (response.ok) {
                 console.log("Atividade adicionada!");
                 setBotaoRegistar(true);
@@ -150,18 +150,18 @@ const Activities = () => {
                 const data = await response.json();
                 console.log(data.turma);
                 setCriancas(data.turma);
-            } 
+            }
         } catch (error) {
             console.error('Erro ao buscar atividades:', error);
         }
     }
 
     const renderActivitiestItemClass = ({ item }) => (
-        <CardActivity item={item} acesso={acessoRegisto} onEdit={handleEditActivity} onDelete={handleDeleteActivity}/>
+        <CardActivity item={item} acesso={acessoRegisto} onEdit={handleEditActivity} onDelete={handleDeleteActivity} />
     );
 
     const renderChildrenItemClass = ({ item }) => (
-        <CardChild item={item} emAvalicao={handleAvaliacao} activity={selectedActivity}/>
+        <CardChild item={item} emAvalicao={handleAvaliacao} activity={selectedActivity} />
     )
 
     const Section = ({ color, content }) => (
@@ -263,7 +263,7 @@ const Activities = () => {
                                 <View style={{ marginLeft: 10 }}>
                                     <Button title="Salvar Edição" color={colors.primary} onPress={handleRegistarAtividade} />
                                 </View>
-                                
+
                             </View>
                         </View>
                     </View>

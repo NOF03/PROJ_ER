@@ -45,7 +45,7 @@ export default function CardActivity({ item, acesso, onEdit, onDelete }) {
                         <Icon name="pencil" style={styles.icon} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => onDelete(item)}>
-                        <Icon name="trash-o" style={{ fontSize: 22, color: 'red' }}/>
+                        <Icon name="trash-o" style={{ fontSize: 22, color: 'red' }} />
                     </TouchableOpacity>
                 </View>
             ) : (

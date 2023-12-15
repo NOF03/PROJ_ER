@@ -10,7 +10,7 @@ export default function MainNavigator() {
 
     return (
         <Navigator screenOptions={{ headerShown: false }}>
-            <Screen name="MenuLogin" component={MenuLogin} />   
+            <Screen name="MenuLogin" component={MenuLogin} />
             <Screen name="InAppNavigator" component={BottomNavigator} />
         </Navigator>
     )

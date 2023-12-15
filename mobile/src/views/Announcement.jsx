@@ -48,7 +48,7 @@ const AnunciosScreen = () => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({titulo: newAnnouncementTitle, descricao: newAnnouncementDescription, idAdmin: user.roleTraits.idAdministrador })
+      body: JSON.stringify({ titulo: newAnnouncementTitle, descricao: newAnnouncementDescription, idAdmin: user.roleTraits.idAdministrador })
 
     };
     try {
@@ -93,7 +93,7 @@ const AnunciosScreen = () => {
     <SafeAreaView style={{ padding: 16, marginBottom: 60 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={{ fontSize: 36, color: colors.inverthard, fontWeight: 600, textAlign: 'center' }}>Bem vindo, </Text>
-        <Text style={{ fontSize: 21, color: colors.inverthard, fontWeight: 600, textAlign: 'center'}}>{user.userInfo.nome}</Text>
+        <Text style={{ fontSize: 21, color: colors.inverthard, fontWeight: 600, textAlign: 'center' }}>{user.userInfo.nome}</Text>
         <Text style={{ fontSize: 12, color: colors.inverthard, fontWeight: 600, textAlign: 'center', marginBottom: 10 }}>| {user.role} |</Text>
 
         {announcements && (
@@ -140,13 +140,13 @@ const AnunciosScreen = () => {
           <Text style={{ fontSize: 21, color: 'red', fontWeight: 600, textAlign: 'center', marginVertical: 10 }}>Adicionar Anúncio Geral</Text>
           <TextInput placeholder='Título do anúncio' style={{ borderWidth: 1, borderColor: colors.inverthard, padding: 12, marginVertical: 10 }} value={newAnnouncementTitle} onChangeText={text => setNewAnnouncementTitle(text)} />
           <TextInput placeholder='Descrição do anúncio' style={{ borderWidth: 1, borderColor: colors.inverthard, padding: 12, marginVertical: 10 }} value={newAnnouncementDescription} onChangeText={text => setNewAnnouncementDescription(text)} />
-          <Button title="Inserir" color={"red"} onPress={createAdminAnnouncement} style={{padding: 12}}/>
+          <Button title="Inserir" color={"red"} onPress={createAdminAnnouncement} style={{ padding: 12 }} />
         </>)}
         {user.role === "educador" && (<>
           <Text style={{ fontSize: 21, color: colors.primary, fontWeight: 600, textAlign: 'center', marginVertical: 10 }}>Adicionar Anúncio Turma</Text>
           <TextInput placeholder='Título do anúncio' style={{ borderWidth: 1, borderColor: colors.inverthard, padding: 12, marginVertical: 10 }} value={newAnnouncementTitle} onChangeText={text => setNewAnnouncementTitle(text)} />
           <TextInput placeholder='Descrição do anúncio' style={{ borderWidth: 1, borderColor: colors.inverthard, padding: 12, marginVertical: 10 }} value={newAnnouncementDescription} onChangeText={text => setNewAnnouncementDescription(text)} />
-          <Button title="Inserir" color={colors.primary} onPress={createClassAnnouncement} style={{padding: 12}}/>
+          <Button title="Inserir" color={colors.primary} onPress={createClassAnnouncement} style={{ padding: 12 }} />
         </>)}
       </ScrollView>
     </SafeAreaView>

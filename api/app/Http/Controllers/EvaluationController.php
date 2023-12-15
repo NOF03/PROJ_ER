@@ -14,7 +14,8 @@ class EvaluationController extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public function registerEvaluation(Request $request) {
+    public function registerEvaluation(Request $request)
+    {
         $idCrianca = $request->input('idCrianca');
         $idAtividade = $request->input('idAtividade');
         $avaliacao = $request->input('avaliacao');
@@ -23,13 +24,11 @@ class EvaluationController extends BaseController
         DB::table('avaliacao')->updateOrInsert([
             "idCrianca" => $idCrianca,
             "idAtividade" => $idAtividade,
-        ],[
+        ], [
             "nota" => $avaliacao,
             "observacao" => $observacoes,
             "data" => DB::raw("CURDATE()"),
         ]);
-
-
     }
 
     public function verifyChildEvaluationOnActivity(Request $request)
@@ -43,5 +42,4 @@ class EvaluationController extends BaseController
 
         return ['existingEvaluation' => $existingEvaluation !== null];
     }
-
 }
