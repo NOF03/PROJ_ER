@@ -317,10 +317,13 @@ CREATE TABLE `mensagem` (
   `idmensagem` int NOT NULL AUTO_INCREMENT,
   `descricao` varchar(3000) NOT NULL,
   `idSala` int NOT NULL,
+  `ccPessoa` int unsigned NOT NULL,
   PRIMARY KEY (`idmensagem`),
   KEY `fk_sala_idx` (`idSala`),
+  KEY `fk_mensagem_pessoa_idx` (`ccPessoa`),
+  CONSTRAINT `fk_mensagem_pessoa` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
   CONSTRAINT `fk_sala` FOREIGN KEY (`idSala`) REFERENCES `sala` (`idsala`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -329,6 +332,7 @@ CREATE TABLE `mensagem` (
 
 LOCK TABLES `mensagem` WRITE;
 /*!40000 ALTER TABLE `mensagem` DISABLE KEYS */;
+INSERT INTO `mensagem` VALUES (1,'oi',7,1),(3,'ola',7,1),(4,'ola',7,1),(5,'tudo bem?',7,1),(6,'ta tudo',7,1);
 /*!40000 ALTER TABLE `mensagem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -366,8 +370,9 @@ DROP TABLE IF EXISTS `sala`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sala` (
   `idsala` int NOT NULL AUTO_INCREMENT,
+  `tituloSala` varchar(100) NOT NULL,
   PRIMARY KEY (`idsala`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -376,7 +381,7 @@ CREATE TABLE `sala` (
 
 LOCK TABLES `sala` WRITE;
 /*!40000 ALTER TABLE `sala` DISABLE KEYS */;
-INSERT INTO `sala` VALUES (5);
+INSERT INTO `sala` VALUES (6,'Mariano Fernandes'),(7,'Ana Pereira');
 /*!40000 ALTER TABLE `sala` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -404,7 +409,7 @@ CREATE TABLE `sala_has_pessoa` (
 
 LOCK TABLES `sala_has_pessoa` WRITE;
 /*!40000 ALTER TABLE `sala_has_pessoa` DISABLE KEYS */;
-INSERT INTO `sala_has_pessoa` VALUES (5,1),(5,164083702),(5,213757233),(5,231060989),(5,231061319),(5,281835582);
+INSERT INTO `sala_has_pessoa` VALUES (6,172850580),(6,213757233),(6,231060989),(6,231061319),(6,295313546),(7,1),(7,164083702),(7,213757233),(7,231060989),(7,231061319),(7,281835582);
 /*!40000 ALTER TABLE `sala_has_pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -440,4 +445,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-15 15:43:37
+-- Dump completed on 2023-12-16  4:09:07
