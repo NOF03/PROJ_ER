@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function CardActivity({ item, acesso, onEdit, onDelete }) {
+export default function CardActivity({ item, acesso, onEdit, onDelete, onWatching }) {
     const { colors } = useTheme();
 
     const styles = StyleSheet.create({
@@ -49,7 +49,9 @@ export default function CardActivity({ item, acesso, onEdit, onDelete }) {
                     </TouchableOpacity>
                 </View>
             ) : (
-                <Icon name="eye" style={styles.icon} />
+                <TouchableOpacity onPress={() => onWatching(item)}>
+                    <Icon name="eye" style={styles.icon} />
+                </TouchableOpacity>
             )}
         </View>
     );

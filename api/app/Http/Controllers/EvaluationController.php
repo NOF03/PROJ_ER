@@ -36,10 +36,11 @@ class EvaluationController extends BaseController
         $idCrianca = $request->input('idCrianca');
         $idAtividade = $request->input('idAtividade');
         $existingEvaluation = DB::table('avaliacao')
+            ->select('*')
             ->where('idCrianca', $idCrianca)
             ->where('idAtividade', $idAtividade)
             ->first();
 
-        return ['existingEvaluation' => $existingEvaluation !== null];
+        return ['existingEvaluation' => $existingEvaluation ];
     }
 }

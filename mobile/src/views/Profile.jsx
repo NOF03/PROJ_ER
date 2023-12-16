@@ -3,6 +3,7 @@ import { SafeAreaView, View, Text, StyleSheet, ScrollView, TouchableOpacity, Ani
 import { useTheme } from '@react-navigation/native';
 import { useUserContext } from '../components/UserContext';
 import { apiURL } from '../services/api';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 export default function Profile() {
@@ -127,7 +128,7 @@ export default function Profile() {
             <ScrollView contentContainerStyle={styles.contentContainer}>
 
                 <View style={styles.profileHeader}>
-                    <View style={styles.profileImagePlaceholder} />
+                    <Icon name='person-circle' style= {{ fontSize: 140, color: colors.inverthard}}/>
                     <Text style={styles.profileName}>{user?.userInfo.nome} | {user?.role}</Text>
                     <Text style={styles.profileInfo}>Idade: {user?.userInfo.idade}</Text>
                     {user?.roleTraits.contacto && <Text style={styles.profileInfo}>Contacto: {user?.roleTraits.contacto}</Text>}

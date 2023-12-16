@@ -20,6 +20,7 @@ const Activities = () => {
     const [criancas, setCriancas] = useState(null);
     const [emAvalicao, setEmAvaliacao] = useState(null);
     const [selectedChild, setSelectedChild] = useState(null);
+    const [emObservacao, setEmObservacao] = useState(false);
 
     const { user } = useUserContext();
     const acessoRegisto = user.role === 'educador';
@@ -49,15 +50,29 @@ const Activities = () => {
 
     const handleEditActivity = async (activity) => {
 
-        setSelectedActivity(activity)
+        setSelectedActivity(activity);
         setBotaoRegistar(false);
-        setEmEdicao(true)
+        setEmObservacao(true);
+        setEmEdicao(true);
 
         setNomeAtividade(activity.nome);
         setDuracao(activity.duracao.toString());
         setDescricao(activity.descricao);
         setObjetivo(activity.objetivo);
     };
+
+    const handleWatchingActivity = async (activity) => {
+        setSelectedActivity(activity);
+        setBotaoRegistar(false);
+        setEmEdicao(false);
+        setEmObservacao(true);
+
+        setNomeAtividade(activity.nome);
+        setDuracao(activity.duracao.toString());
+        setDescricao(activity.descricao);
+        setObjetivo(activity.objetivo);
+
+    }
 
     const handleDeleteActivity = async (activity) => {
         const requestOptions =
@@ -119,7 +134,7 @@ const Activities = () => {
                     : {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ idTurma: user.roleTraits.idTurma }),
+                        body: JSON.stringify({ idTurma: (user.role !== "encarregadoeducacao") ? user.roleTraits.idTurma : user.roleTraits.idCriancas }),
                     };
 
             const response = await fetch(apiURL + '/activities', requestOptions);
@@ -156,9 +171,14 @@ const Activities = () => {
         }
     }
 
-    const renderActivitiestItemClass = ({ item }) => (
-        <CardActivity item={item} acesso={acessoRegisto} onEdit={handleEditActivity} onDelete={handleDeleteActivity} />
+    const renderActivitiesItemClass = ({ item }) => (
+        acessoRegisto ? (
+            <CardActivity item={item} acesso={acessoRegisto} onEdit={handleEditActivity} onDelete={handleDeleteActivity} />
+        ) : (
+            <CardActivity item={item} acesso={acessoRegisto} onWatching={handleWatchingActivity} />
+        )
     );
+
 
     const renderChildrenItemClass = ({ item }) => (
         <CardChild item={item} emAvalicao={handleAvaliacao} activity={selectedActivity} />
@@ -177,7 +197,7 @@ const Activities = () => {
                     <Button title="Registar Atividade" color={colors.primary} onPress={handleBotaoRegistar} />
                 </View>
             ) : (
-                !botaoRegistar && !emEdicao && (
+                !botaoRegistar && !emEdicao && !emObservacao && (
                     <View style={styles.inputContainer}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, textAlign: 'center' }}>Registar Atividade</Text>
                         <TextInput
@@ -222,13 +242,13 @@ const Activities = () => {
                     <FlatList
                         data={data}
                         keyExtractor={(item, subIndex) => subIndex.toString()}
-                        renderItem={renderActivitiestItemClass}
+                        renderItem={renderActivitiesItemClass}
                         style={{ width: '100%' }}
                     />
                 </React.Fragment>
             ))}
 
-            {!botaoRegistar && emEdicao && selectedActivity && (
+            {!botaoRegistar && emEdicao && selectedActivity && !emObservacao && (
                 <>
                     <View style={styles.inputContainer}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, textAlign: 'center' }}>Editar Atividade</Text>
@@ -279,6 +299,16 @@ const Activities = () => {
 
                     </View>
                 </>
+            )}
+
+            {!botaoRegistar && selectedActivity && emObservacao && !emEdicao && (
+                <View>
+                    <Text>Nome: {selectedActivity.nome}</Text>
+                    <Text>Duração: {selectedActivity.duracao}</Text>
+                    <Text>Descrição: {selectedActivity.descricao}</Text>
+                    <Text>Objetivos: {selectedActivity.objetivo}</Text>
+                    <Button title="Voltar Atrás" onPress={handleBotaoVoltar} />
+                </View>
             )}
         </View>
     );

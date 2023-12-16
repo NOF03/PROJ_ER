@@ -7,6 +7,7 @@ use App\Http\Controllers\AnnounceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\NewsController;
 use App\Http\Middleware\VerifyCsrfToken;
 
 
@@ -26,6 +27,10 @@ Route::post('activities/showChildren', [ActivityController::class, 'showAllClass
 
 Route::post('evaluation/create', [EvaluationController::class, 'registerEvaluation'])->withoutMiddleware([VerifyCsrfToken::class]);
 Route::post('evaluation/verify', [EvaluationController::class, 'verifyChildEvaluationOnActivity'])->withoutMiddleware([VerifyCsrfToken::class]);
+
+Route::post('getRooms', [NewsController::class, 'getRooms'])->withoutMiddleware([VerifyCsrfToken::class]);
+Route::post('getMessagesRoom', [NewsController::class, 'getMessagesRoom'])->withoutMiddleware([VerifyCsrfToken::class]);
+Route::post('sendMessagesRoom', [NewsController::class, 'sendMessagesRoom'])->withoutMiddleware([VerifyCsrfToken::class]);
 
 Route::post('verifyIdentification', [UserController::class, 'verifyIdentification'])->withoutMiddleware([VerifyCsrfToken::class]);
 

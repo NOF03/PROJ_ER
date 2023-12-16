@@ -26,7 +26,20 @@ class ActivityController extends BaseController
     {
         $idTurma = $request->input('idTurma');
 
-        $activities[$idTurma] = DB::select('SELECT * FROM creche.atividade WHERE atividade.idTurma = ?', [$idTurma]);
+
+        if (is_array($idTurma)) {
+            foreach ($idTurma as $crianca) {
+
+                $turma = DB::table('crianca')->select('idTurma')->where('idCrianca', $crianca)->first();
+
+                $activities[$turma->idTurma] = DB::select('SELECT * FROM creche.atividade WHERE atividade.idTurma = ?', [$turma->idTurma]);
+            }
+        } else {
+            $activities[$idTurma] = DB::select('SELECT * FROM creche.atividade WHERE atividade.idTurma = ?', [$idTurma]);
+            
+        }
+
+            
 
         return ['activities' => $activities];
     }

@@ -34,12 +34,14 @@ export default function CardChild({ item, onPress, activity }) {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
-                if (data.existingEvaluation) {
+                if (data.existingEvaluation !== null) {
                     setExistsEval(true);
+                    setAvaliacao(data.existingEvaluation.nota);
+                    setObservacoes(data.existingEvaluation.observacao);
                 }
             }
         } catch (error) {
-
+            console.error(error);
         }
     }
 
