@@ -126,7 +126,7 @@ CREATE TABLE `atividade` (
 
 LOCK TABLES `atividade` WRITE;
 /*!40000 ALTER TABLE `atividade` DISABLE KEYS */;
-INSERT INTO `atividade` VALUES (1,'Futebolada',98,'Quinta de Sao Roque','Jogarem a bola',1,'2023-12-14'),(2,'Basquetebolada',120,'Quinta de Sao Roque','Jogarem a bola',1,'2023-12-13');
+INSERT INTO `atividade` VALUES (1,'Futebolada',98,'Quinta de Sao Roque','Jogarem a bola',1,'2023-12-14');
 /*!40000 ALTER TABLE `atividade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +144,7 @@ CREATE TABLE `auxiliareducativo` (
   PRIMARY KEY (`idAuxiliar`,`ccPessoa`),
   KEY `fk_AuxiliarEducativo_Pessoa1_idx` (`ccPessoa`),
   CONSTRAINT `fk_AuxiliarEducativo_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `auxiliareducativo` (
 
 LOCK TABLES `auxiliareducativo` WRITE;
 /*!40000 ALTER TABLE `auxiliareducativo` DISABLE KEYS */;
-INSERT INTO `auxiliareducativo` VALUES (1,2106.95,231061319),(2,2677.4,231060989),(3,2066.14,213757233);
+INSERT INTO `auxiliareducativo` VALUES (1,2106.95,231061319),(2,2677.4,231060989),(3,2066.14,213757233),(4,2000000,256827624);
 /*!40000 ALTER TABLE `auxiliareducativo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +205,7 @@ CREATE TABLE `crianca` (
   KEY `fk_Crianca_Turma1_idx` (`idTurma`),
   CONSTRAINT `fk_Crianca_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
   CONSTRAINT `fk_Crianca_Turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +214,7 @@ CREATE TABLE `crianca` (
 
 LOCK TABLES `crianca` WRITE;
 /*!40000 ALTER TABLE `crianca` DISABLE KEYS */;
-INSERT INTO `crianca` VALUES (1,114937360,4),(2,137498006,4),(3,171812432,1),(4,179168908,4),(5,189648359,2),(6,213508244,4),(7,223056814,1),(8,238714575,1),(9,294388767,4),(10,295807548,2);
+INSERT INTO `crianca` VALUES (1,114937360,4),(2,137498006,4),(11,147370932,2),(3,171812432,1),(4,179168908,4),(5,189648359,2),(6,213508244,4),(7,223056814,1),(8,238714575,1),(9,294388767,4),(10,295807548,2);
 /*!40000 ALTER TABLE `crianca` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +242,7 @@ CREATE TABLE `crianca_has_encarregadoeducacao` (
 
 LOCK TABLES `crianca_has_encarregadoeducacao` WRITE;
 /*!40000 ALTER TABLE `crianca_has_encarregadoeducacao` DISABLE KEYS */;
-INSERT INTO `crianca_has_encarregadoeducacao` VALUES (1,1),(7,2);
+INSERT INTO `crianca_has_encarregadoeducacao` VALUES (1,1),(7,2),(11,4);
 /*!40000 ALTER TABLE `crianca_has_encarregadoeducacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +265,7 @@ CREATE TABLE `educador` (
   KEY `fk_Educador_Pessoa1_idx` (`ccPessoa`),
   CONSTRAINT `ccPessoa` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
   CONSTRAINT `idTurma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,7 +274,7 @@ CREATE TABLE `educador` (
 
 LOCK TABLES `educador` WRITE;
 /*!40000 ALTER TABLE `educador` DISABLE KEYS */;
-INSERT INTO `educador` VALUES (1,967883954,1598.5,1,164083702),(2,924866182,1023.88,2,154825342),(3,936249581,4323.89,3,147819490),(4,968232947,2547.81,4,172850580),(5,964783940,7000,1,1);
+INSERT INTO `educador` VALUES (1,967883954,1598.5,1,164083702),(2,924866182,1023.88,2,154825342),(3,936249581,4323.89,3,147819490),(4,968232947,2547.81,4,172850580),(5,964783940,7000,1,1),(6,964964782,3400,2,159827647);
 /*!40000 ALTER TABLE `educador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,7 +293,7 @@ CREATE TABLE `encarregadoeducacao` (
   PRIMARY KEY (`idEncarregado`,`ccPessoa`),
   KEY `fk_EncarregadoEducacao_Pessoa1_idx` (`ccPessoa`),
   CONSTRAINT `fk_EncarregadoEducacao_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,7 +302,7 @@ CREATE TABLE `encarregadoeducacao` (
 
 LOCK TABLES `encarregadoeducacao` WRITE;
 /*!40000 ALTER TABLE `encarregadoeducacao` DISABLE KEYS */;
-INSERT INTO `encarregadoeducacao` VALUES (1,'936790183','PAI',295313546),(2,'936462943','MAE',281835582);
+INSERT INTO `encarregadoeducacao` VALUES (1,'936790183','PAI',295313546),(2,'936462943','MAE',281835582),(3,'964964782','PAI',159827628),(4,'964964787','PAI',159827636);
 /*!40000 ALTER TABLE `encarregadoeducacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,7 +323,7 @@ CREATE TABLE `mensagem` (
   KEY `fk_mensagem_pessoa_idx` (`ccPessoa`),
   CONSTRAINT `fk_mensagem_pessoa` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
   CONSTRAINT `fk_sala` FOREIGN KEY (`idSala`) REFERENCES `sala` (`idsala`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -332,7 +332,7 @@ CREATE TABLE `mensagem` (
 
 LOCK TABLES `mensagem` WRITE;
 /*!40000 ALTER TABLE `mensagem` DISABLE KEYS */;
-INSERT INTO `mensagem` VALUES (1,'oi',7,1),(3,'ola',7,1),(4,'ola',7,1),(5,'tudo bem?',7,1),(6,'ta tudo',7,1);
+INSERT INTO `mensagem` VALUES (1,'oi',7,1),(3,'ola',7,1),(4,'ola',7,1),(5,'tudo bem?',7,1),(6,'ta tudo',7,1),(7,'scscsc',7,281835582),(8,'ola',7,281835582),(9,'tudo bem',7,281835582),(10,'Adoramos robos',7,1);
 /*!40000 ALTER TABLE `mensagem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -357,7 +357,7 @@ CREATE TABLE `pessoa` (
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
-INSERT INTO `pessoa` VALUES (1,'Horacio Drummond',53),(101866776,'Marta Silva',22),(111306120,'Luís Mendes',34),(114937360,'Mariano Fernandes',2),(117082778,'Rui Oliveira',40),(137498006,'Leonor Mendes',2),(147819490,'José Costa',27),(154825342,'Pedro Martins',29),(164083702,'Carlos Pereira',35),(171812432,'Daniel Sousa',0),(172850580,'Ana Santos',28),(175156429,'Beatriz Sousa',26),(179168908,'Mariana Oliveira',0),(179813564,'Catarina Fernandes',32),(189648359,'Tomás Santos',1),(199656762,'Sofia Almeida',31),(204621455,'Tiago Santos',30),(213508244,'Francisco Martins',1),(213757233,'Isabel Pereira',37),(221388237,'Miguel Oliveira',24),(223056814,'Ana Pereira',0),(231060989,'Raquel Fernandes',31),(231061319,'Inês Rodrigues',33),(238714575,'Ricardo Silva',2),(253638596,'Cátia Silva',23),(260100048,'João Sousa',28),(269364312,'Gonçalo Almeida',35),(281835582,'Ana Costa',29),(294388767,'Carolina Almeida',2),(295313546,'Hugo Martins',26),(295807548,'Lara Costa',1);
+INSERT INTO `pessoa` VALUES (1,'Horacio Drummond',53),(101866776,'Marta Silva',22),(111306120,'Luís Mendes',34),(114937360,'Mariano Fernandes',2),(117082778,'Rui Oliveira',40),(137498006,'Leonor Mendes',2),(147370932,'Joao Vasconcelos',1),(147819490,'José Costa',27),(154825342,'Pedro Martins',29),(159827628,'Jose Fernandes',34),(159827636,'Lubelio Romualdo',38),(159827647,'Jose Fernandes',34),(164083702,'Carlos Pereira',35),(171812432,'Daniel Sousa',0),(172850580,'Ana Santos',28),(175156429,'Beatriz Sousa',26),(179168908,'Mariana Oliveira',0),(179813564,'Catarina Fernandes',32),(189648359,'Tomás Santos',1),(199656762,'Sofia Almeida',31),(204621455,'Tiago Santos',30),(213508244,'Francisco Martins',1),(213757233,'Isabel Pereira',37),(221388237,'Miguel Oliveira',24),(223056814,'Ana Pereira',0),(231060989,'Raquel Fernandes',31),(231061319,'Inês Rodrigues',33),(238714575,'Ricardo Silva',2),(253638596,'Cátia Silva',23),(256827624,'Emidio Gomes',42),(260100048,'João Sousa',28),(269364312,'Gonçalo Almeida',35),(281835582,'Ana Costa',29),(294388767,'Carolina Almeida',2),(295313546,'Hugo Martins',26),(295807548,'Lara Costa',1);
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,7 +372,7 @@ CREATE TABLE `sala` (
   `idsala` int NOT NULL AUTO_INCREMENT,
   `tituloSala` varchar(100) NOT NULL,
   PRIMARY KEY (`idsala`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -381,7 +381,7 @@ CREATE TABLE `sala` (
 
 LOCK TABLES `sala` WRITE;
 /*!40000 ALTER TABLE `sala` DISABLE KEYS */;
-INSERT INTO `sala` VALUES (6,'Mariano Fernandes'),(7,'Ana Pereira');
+INSERT INTO `sala` VALUES (6,'Mariano Fernandes'),(7,'Ana Pereira'),(8,'Joao Vasconcelos');
 /*!40000 ALTER TABLE `sala` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -409,7 +409,7 @@ CREATE TABLE `sala_has_pessoa` (
 
 LOCK TABLES `sala_has_pessoa` WRITE;
 /*!40000 ALTER TABLE `sala_has_pessoa` DISABLE KEYS */;
-INSERT INTO `sala_has_pessoa` VALUES (6,172850580),(6,213757233),(6,231060989),(6,231061319),(6,295313546),(7,1),(7,164083702),(7,213757233),(7,231060989),(7,231061319),(7,281835582);
+INSERT INTO `sala_has_pessoa` VALUES (6,172850580),(6,213757233),(6,231060989),(6,231061319),(6,295313546),(7,1),(7,164083702),(7,213757233),(7,231060989),(7,231061319),(7,281835582),(8,154825342),(8,159827636),(8,159827647),(8,213757233),(8,231060989),(8,231061319);
 /*!40000 ALTER TABLE `sala_has_pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -445,4 +445,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-16  4:09:07
+-- Dump completed on 2023-12-17 18:12:51

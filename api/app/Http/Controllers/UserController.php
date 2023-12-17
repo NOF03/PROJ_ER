@@ -56,4 +56,45 @@ class UserController extends BaseController
 
         return ["children" => $getChildren];
     }
+
+    public function createPersonOnRole(Request $request)
+    {
+        $nome = $request->input('nome');
+        $idade = $request->input('idade');
+        $ccPessoa = $request->input('ccPessoa');
+        $contacto = $request->input('contacto');
+        $role = $request->input('role');
+
+        DB::insert('INSERT INTO creche.pessoa VALUES (?, ?, ?)', [$ccPessoa, $nome, $idade]);
+
+        if ($role === 'encarregadoeducacao') {
+
+            $parentesco = $request->input('parentesco');
+            $lastInsertIdEncarregado = DB::table('encarregadoeducacao')->insertGetId([
+                'contacto' => $contacto,
+                'parentesco' => $parentesco,
+                'ccPessoa' => $ccPessoa,
+            ]);
+            $nomeCriancas = $request->input('nomeCriancas');
+            $idadeCriancas = $request->input('idadeCriancas');
+            $ccCriancas = $request->input('ccCriancas');
+            $turmaCriancas = $request->input('turmaCriancas');
+            $numeroCriancas = $request->input('numeroCriancas');
+            for ($i = 0; $i < $numeroCriancas; $i += 1) {
+                DB::insert('INSERT INTO creche.pessoa VALUES (?, ?, ?)', [$ccCriancas[$i], $nomeCriancas[$i], $idadeCriancas[$i]]);
+                $lastInsertIdCrianca = DB::table('crianca')->insertGetId([
+                    'ccPessoa' => $ccCriancas[$i],
+                    'idTurma' => $turmaCriancas[$i],
+                ]);
+                DB::insert('INSERT INTO creche.crianca_has_encarregadoeducacao VALUES (?, ?)', [$lastInsertIdCrianca, $lastInsertIdEncarregado]);
+            }
+        } elseif ($role === "educador") {
+            $salario = $request->input('salario');
+            $turma = $request->input('turma');
+            DB::insert('INSERT INTO creche.educador VALUES (NULL, ?, ?, ?, ?)', [$contacto, $salario, $turma, $ccPessoa]);
+        } else {
+            $salario = $request->input('salario');
+            DB::insert('INSERT INTO creche.auxiliareducativo VALUES (NULL, ?, ?)', [$salario, $ccPessoa]);
+        }
+    }
 }

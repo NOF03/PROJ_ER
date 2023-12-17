@@ -35,11 +35,7 @@ class NewsController extends BaseController
     {
         $idSala = $request->input('idSala');
 
-            $messages = DB::table('mensagem')
-                ->select('*')
-                ->where('idSala', $idSala)
-                ->get();
-        
+            $messages = DB::select('SELECT pessoa.nome as nome, mensagem.descricao FROM creche.pessoa, creche.mensagem WHERE pessoa.cartaoCidadao=mensagem.ccPessoa AND mensagem.idSala= ?', [$idSala]);
 
         return ["messages" => $messages];
     }

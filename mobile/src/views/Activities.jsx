@@ -52,7 +52,7 @@ const Activities = () => {
 
         setSelectedActivity(activity);
         setBotaoRegistar(false);
-        setEmObservacao(true);
+        setEmObservacao(false);
         setEmEdicao(true);
 
         setNomeAtividade(activity.nome);
@@ -90,6 +90,7 @@ const Activities = () => {
                 console.log("Atividade removida!");
                 setBotaoRegistar(false);
                 setBotaoRegistar(true);
+                setSelectedActivity(null);
             }
 
         } catch (error) {

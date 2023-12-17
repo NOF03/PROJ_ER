@@ -2,12 +2,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import { Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 import { useUserContext } from './UserContext'
 
 import Activities from '../views/Activities';
 import Announcement from '../views/Announcement';
 import News from '../views/News';
 import Profile from '../views/Profile';
+import AccountManagement from '../views/AccountManagement';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,9 +45,12 @@ export default function BottomNavigator() {
               break;
             case 'Novidades':
               iconName = 'bell-o';
-              break;
+              break; 
             case 'Perfil':
               iconName = 'user';
+              break;
+            case 'Gestao de Contas':
+              iconName = 'users'
               break;
             default:
               iconName = 'circle';
@@ -81,7 +86,8 @@ export default function BottomNavigator() {
       <Tab.Screen name="Anuncios" component={Announcement} />
       {console.log(user)}
       {user && user.role !== "auxiliareducativo" && <Tab.Screen name="Atividades" component={Activities} />}
-      <Tab.Screen name="Novidades" component={News} />
+      {user && user.role !== "administrador" ? (<Tab.Screen name="Novidades" component={News} />) : (<Tab.Screen name="Gestao de Contas" component={AccountManagement} />)}
+      
       <Tab.Screen name="Perfil" component={Profile} />
     </Tab.Navigator>
   );

@@ -33,5 +33,5 @@ Route::post('getMessagesRoom', [NewsController::class, 'getMessagesRoom'])->with
 Route::post('sendMessagesRoom', [NewsController::class, 'sendMessagesRoom'])->withoutMiddleware([VerifyCsrfToken::class]);
 
 Route::post('verifyIdentification', [UserController::class, 'verifyIdentification'])->withoutMiddleware([VerifyCsrfToken::class]);
-
+Route::post('createPersonOnRole', [UserController::class, 'createPersonOnRole'])->withoutMiddleware([VerifyCsrfToken::class]);
 Route::post('getChildrenData', [UserController::class, 'getChildrenData'])->withoutMiddleware([VerifyCsrfToken::class]);
