@@ -10,7 +10,7 @@ export default function Room({ item }) {
     const [modalVisible, setModalVisible] = useState(false);
     const { user } = useUserContext();
     const { colors } = useTheme();
-    const styles = useStyles(colors);
+    const styles = useStyles(item, colors);
     const [lastSender, setLastSender] = useState('');
     
 
@@ -103,10 +103,10 @@ export default function Room({ item }) {
     );
 }
 
-function useStyles(colors) {
+function useStyles(item, colors) {
     return StyleSheet.create({
         roomButton: {
-            backgroundColor: colors.primary,
+            backgroundColor: item.idSala == 9 ? "red" : colors.primary,
             padding: 20,
             marginVertical: 8,
             borderRadius: 10,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, FlatList } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { useUserContext } from '../components/UserContext';
 import { apiURL } from '../services/api';
@@ -21,6 +21,9 @@ const Activities = () => {
     const [emAvalicao, setEmAvaliacao] = useState(null);
     const [selectedChild, setSelectedChild] = useState(null);
     const [emObservacao, setEmObservacao] = useState(false);
+    
+    const [avaliacao, setAvaliacao] = useState(0);
+    const [observacoes, setObservacoes] = useState('');
 
     const { user } = useUserContext();
     const acessoRegisto = user.role === 'educador';
@@ -192,7 +195,7 @@ const Activities = () => {
     );
 
     return (
-        <View style={{ padding: 16, marginBottom: 60 }}>
+        <ScrollView style={{ padding: 16, marginBottom: 60 }}>
             {botaoRegistar && acessoRegisto ? (
                 <View style={styles.atividadesContainer}>
                     <Button title="Registar Atividade" color={colors.primary} onPress={handleBotaoRegistar} />
@@ -230,7 +233,7 @@ const Activities = () => {
                                 <Button title="Cancelar Registo" color={'red'} onPress={handleBotaoVoltar} />
                                 <View style={{ marginLeft: 10 }}>
                                     <Button title="Inserir Atividade" color={colors.primary} onPress={handleRegistarAtividade} />
-                                </View>
+                                </View> 
                             </View>
                         </View>
                     </View>
@@ -303,15 +306,18 @@ const Activities = () => {
             )}
 
             {!botaoRegistar && selectedActivity && emObservacao && !emEdicao && (
-                <View>
-                    <Text>Nome: {selectedActivity.nome}</Text>
-                    <Text>Duração: {selectedActivity.duracao}</Text>
-                    <Text>Descrição: {selectedActivity.descricao}</Text>
-                    <Text>Objetivos: {selectedActivity.objetivo}</Text>
-                    <Button title="Voltar Atrás" onPress={handleBotaoVoltar} />
+                <View style={styles.activityContainer}>
+                    <Text style={styles.activityTitle}>Nome: {selectedActivity.nome}</Text>
+                    <Text style={styles.activityText}>Duração: {selectedActivity.duracao}</Text>
+                    <Text style={styles.activityText}>Descrição: {selectedActivity.descricao}</Text>
+                    <Text style={styles.activityText}>Objetivos: {selectedActivity.objetivo}</Text>
+                    <TouchableOpacity
+                        onPress={handleBotaoVoltar}
+                        style={styles.backButton}
+                    ><Text>Voltar Atrás</Text></TouchableOpacity>
                 </View>
             )}
-        </View>
+        </ScrollView>
     );
 };
 
@@ -327,6 +333,26 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 15,
         marginTop: 30,
+    },
+    activityContainer: {
+        padding: 16,
+        borderRadius: 10,
+        elevation: 3,
+        marginBottom: 20,
+    },
+    activityText: {
+        fontSize: 16,
+        marginBottom: 10,
+    },
+    activityTitle: {
+        fontSize: 20,
+        marginBottom: 10,
+    },
+    backButton: {
+        marginTop: 20,
+        backgroundColor: 'red',
+        padding: 10,
+        borderRadius: 5,
     },
     input: {
         borderColor: 'gray',

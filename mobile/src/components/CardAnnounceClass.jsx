@@ -107,10 +107,11 @@ export default function CardAnnounceClass({ item }) {
               <Text style={styles.titleTextModal}>{item.Titulo}</Text>
               <Text style={styles.announcementText}>{item.Anuncio}</Text>
               <Text style={styles.authorText}>{item.Autor} | Educador</Text>
-            </View>
-            <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
+              <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
+            </View>
+            
           </ScrollView>
         </View>
       </Modal>

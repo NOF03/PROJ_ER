@@ -30,6 +30,7 @@ export default function News() {
                     idSala,
                     ...roomData,
                 }));
+                console.log(roomsArray)
                 setRooms(roomsArray);
             }
         } catch (error) {

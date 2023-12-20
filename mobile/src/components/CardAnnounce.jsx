@@ -93,23 +93,24 @@ export default function CardAnnounce({ item }) {
           </View>
         </View>
       </TouchableOpacity>
-
-      <Modal
-        transparent
+ 
+      <Modal 
+        transparent 
         animationType="slide"
         visible={modalVisible}
-        onRequestClose={toggleModal}
-      >
-        <View style={styles.modalContainer}>
+        onRequestClose={toggleModal} 
+      > 
+        <View style={styles.modalContainer}>    
           <ScrollView contentContainerStyle={styles.modalContent}>
             <View style={{ paddingHorizontal: 20, paddingVertical: 8 }}>
               <Text style={styles.titleTextModal}>{item.Titulo}</Text>
               <Text style={styles.announcementText}>{item.Anuncio}</Text>
               <Text style={styles.authorText}>{item.Autor} | Admin</Text>
-            </View>
-            <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
+              <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
+            </View>
+            
           </ScrollView>
         </View>
       </Modal>
