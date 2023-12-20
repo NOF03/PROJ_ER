@@ -71,7 +71,6 @@ Copiar o link para o api.js no /mobile:
 - Node.js (choco install nodejs-lts)
 - Java Development Kit (choco install microsoft-openjdk17)
 - Android Studio (para desenvolvimento Android)
-- Xcode (para desenvolvimento iOS, disponível apenas no macOS)
 - Ter a Virtualização ativada na BIOS.
 
 ### Configuração
@@ -90,8 +89,9 @@ npm install
 #### Para Android:
 - Abrir o "mobile" no Android Studio;
 - Criar um "Pixel 7" com o Tiramisu 13 (SDK 33) em cima à direita onde diz "Virtual Device Manager".
-- Ir a para "File" e depois "Project Structure" e selecionar o SDK 33. Se nao encontrar, clicar em "Browse" e selecionar a pasta "<user>/Appdata/Android/Sdk" e ele irá encontrar e aí selecionar o 33.
+- Ir a para "File" e depois "Project Structure" e selecionar o SDK 33. Se nao encontrar, clicar em "Browse" e selecionar a pasta "<user>/Appdata/Local/Android/Sdk" e ele irá encontrar e aí selecionar o 33.
 - Correr o comando: `npx react-native doctor` e se houver algum erro clicar no "f".
+- Mesmo que dê algum erro nesta etapa, reiniciar o Android Studio e iniciar a aplicação.
 - Algum erro específico: procurar na net.
 
 ```

@@ -85,7 +85,7 @@ CREATE TABLE `anuncioturma` (
   `descricao` mediumtext NOT NULL,
   `titulo` varchar(100) NOT NULL,
   PRIMARY KEY (`idanuncioTurma`,`idTurma`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `anuncioturma` (
 
 LOCK TABLES `anuncioturma` WRITE;
 /*!40000 ALTER TABLE `anuncioturma` DISABLE KEYS */;
-INSERT INTO `anuncioturma` VALUES (1,1,'Queridos Encarregados de Educação,\n\nÉ com grande entusiasmo que partilhamos as novidades empolgantes da nossa jornada educativa! Na qualidade de educadores dedicados, estamos empenhados em proporcionar uma experiência educacional significativa para os vossos queridos filhos.','Anúncio Especial para Encarregados de Educação'),(2,4,'Ola caros Encarregados de Educacao \n\nehehehhasfsodgnosidgnisodmgoismdgoimsdgoisopdgmiopsdmg','Mensagem de boas-vindas'),(3,1,'Bem vindos','Bem vindos');
+INSERT INTO `anuncioturma` VALUES (1,1,'Queridos Encarregados de Educação,\n\nÉ com grande entusiasmo que partilhamos as novidades empolgantes da nossa jornada educativa! Na qualidade de educadores dedicados, estamos empenhados em proporcionar uma experiência educacional significativa para os vossos queridos filhos.','Anúncio Especial para Encarregados de Educação'),(2,4,'Ola caros Encarregados de Educacao \n\nehehehhasfsodgnosidgnisodmgoismdgoimsdgoisopdgmiopsdmg','Mensagem de boas-vindas'),(3,1,'Bem vindos','Bem vindos'),(4,4,'Aprender brincando: novas atividades lúdicas para as crianças!','Atividades Lúdicas'),(5,4,'Festa temática na creche no próximo sábado. Todos estão convidados!','Festa Temática'),(6,2,'Inscrições abertas para a oficina de arte. Garanta a vaga do seu filho!','Oficina de Arte'),(7,1,'Palestra para pais: Como estimular o desenvolvimento cognitivo em casa.','Palestra Educativa'),(8,3,'Concurso de desenhos: as melhores obras serão premiadas!','Concurso de Desenhos'),(9,4,'Excursão ao zoológico planejada para o mês que vem. Inscreva-se agora!','Excursão ao Zoológico'),(10,2,'Novo parquinho inaugurado. Venha conferir com seus filhos!','Inauguração do Parquinho'),(11,2,'Semana da leitura: atividades especiais para promover o gosto pela leitura.','Semana da Leitura'),(12,1,'Aulas de música agora disponíveis na creche. Inscreva seu filho!','Aulas de Música'),(13,3,'Feira de ciências com as crianças expondo seus projetos. Não perca!','Feira de Ciências'),(14,3,'Novo playground inaugurado. Venha brincar com a gente!','Inauguração do Playground'),(15,4,'Curso de culinária para crianças: uma forma divertida de aprender!','Curso de Culinária'),(16,1,'Dia da família na creche: venham participar de atividades especiais!','Dia da Família'),(17,1,'Apresentação de teatro organizada pelos pequenos artistas da creche.','Apresentação de Teatro');
 /*!40000 ALTER TABLE `anuncioturma` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,7 +176,7 @@ CREATE TABLE `avaliacao` (
   KEY `fk_Avaliacao_Atividade1_idx` (`idAtividade`),
   CONSTRAINT `fk_Avaliacao_Atividade1` FOREIGN KEY (`idAtividade`) REFERENCES `atividade` (`idAtividade`),
   CONSTRAINT `fk_Avaliacao_Crianca1` FOREIGN KEY (`idCrianca`) REFERENCES `crianca` (`idCrianca`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,7 +185,7 @@ CREATE TABLE `avaliacao` (
 
 LOCK TABLES `avaliacao` WRITE;
 /*!40000 ALTER TABLE `avaliacao` DISABLE KEYS */;
-INSERT INTO `avaliacao` VALUES (1,'4','Muito divertido','2023-12-14 00:00:00',3,1);
+INSERT INTO `avaliacao` VALUES (1,'4','Muito divertido','2023-12-14 00:00:00',3,1),(2,'4','Distrais-se um pouco','2023-12-20 00:00:00',12,9),(3,'2','Muito bom','2023-12-20 00:00:00',13,9);
 /*!40000 ALTER TABLE `avaliacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +205,7 @@ CREATE TABLE `crianca` (
   KEY `fk_Crianca_Turma1_idx` (`idTurma`),
   CONSTRAINT `fk_Crianca_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
   CONSTRAINT `fk_Crianca_Turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +214,7 @@ CREATE TABLE `crianca` (
 
 LOCK TABLES `crianca` WRITE;
 /*!40000 ALTER TABLE `crianca` DISABLE KEYS */;
-INSERT INTO `crianca` VALUES (1,114937360,2),(2,137498006,2),(11,147370932,2),(3,171812432,1),(4,179168908,3),(5,189648359,2),(6,213508244,4),(7,223056814,1),(8,238714575,1),(9,294388767,2),(10,295807548,2);
+INSERT INTO `crianca` VALUES (1,114937360,2),(2,137498006,2),(11,147370932,2),(3,171812432,1),(4,179168908,3),(5,189648359,2),(6,213508244,4),(14,222222223,1),(7,223056814,1),(13,233333332,2),(12,233333333,2),(8,238714575,1),(9,294388767,2),(10,295807548,2);
 /*!40000 ALTER TABLE `crianca` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +242,7 @@ CREATE TABLE `crianca_has_encarregadoeducacao` (
 
 LOCK TABLES `crianca_has_encarregadoeducacao` WRITE;
 /*!40000 ALTER TABLE `crianca_has_encarregadoeducacao` DISABLE KEYS */;
-INSERT INTO `crianca_has_encarregadoeducacao` VALUES (1,1),(7,2),(10,2),(11,2);
+INSERT INTO `crianca_has_encarregadoeducacao` VALUES (1,1),(7,2),(10,2),(11,2),(12,5),(13,6);
 /*!40000 ALTER TABLE `crianca_has_encarregadoeducacao` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -271,7 +271,7 @@ WHERE
 
     IF id_sala IS NULL THEN
         -- Create a new room if one doesn't exist
-        INSERT INTO sala VALUES (NULL, (SELECT pessoa.nome FROM pessoa WHERE pessoa.cartaoCidadao = NEW.idEncarregado));
+        INSERT INTO sala VALUES (NULL, (SELECT pessoa.nome FROM pessoa, crianca WHERE crianca.ccPessoa = pessoa.cartaoCidadao AND crianca.idCrianca = NEW.idCrianca));
         SET id_sala = LAST_INSERT_ID();
 
         -- Add encarregadoeducacao to sala_has_pessoa
@@ -352,7 +352,7 @@ CREATE TABLE `encarregadoeducacao` (
   PRIMARY KEY (`idEncarregado`,`ccPessoa`),
   KEY `fk_EncarregadoEducacao_Pessoa1_idx` (`ccPessoa`),
   CONSTRAINT `fk_EncarregadoEducacao_Pessoa1` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -361,7 +361,7 @@ CREATE TABLE `encarregadoeducacao` (
 
 LOCK TABLES `encarregadoeducacao` WRITE;
 /*!40000 ALTER TABLE `encarregadoeducacao` DISABLE KEYS */;
-INSERT INTO `encarregadoeducacao` VALUES (1,'936790183','PAI',295313546),(2,'936462943','MAE',281835582),(3,'964964782','PAI',159827628),(4,'964964787','PAI',159827636);
+INSERT INTO `encarregadoeducacao` VALUES (1,'936790183','PAI',295313546),(2,'936462943','MAE',281835582),(3,'964964782','PAI',159827628),(4,'964964787','PAI',159827636),(5,'965666574','TIO',211111111),(6,'965666572','TIO',211111112);
 /*!40000 ALTER TABLE `encarregadoeducacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -382,7 +382,7 @@ CREATE TABLE `mensagem` (
   KEY `fk_mensagem_pessoa_idx` (`ccPessoa`),
   CONSTRAINT `fk_mensagem_pessoa` FOREIGN KEY (`ccPessoa`) REFERENCES `pessoa` (`cartaoCidadao`),
   CONSTRAINT `fk_sala` FOREIGN KEY (`idSala`) REFERENCES `sala` (`idsala`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -391,7 +391,7 @@ CREATE TABLE `mensagem` (
 
 LOCK TABLES `mensagem` WRITE;
 /*!40000 ALTER TABLE `mensagem` DISABLE KEYS */;
-INSERT INTO `mensagem` VALUES (1,'Ola, tudo bem? Gostaria de divulgar algumas informações.',7,154825342),(3,'Gostaria de informar que haverão novas atividades esta semana.',7,154825342),(4,'É tudo, muitos cumprimentos.',7,154825342),(5,'Atenciosamente,',7,154825342),(6,'Pedro Martins',7,154825342),(7,'Muito obrigado pelas informações.',7,281835582),(8,'Espero que os meus filhos gostem dessas novas atividades.',7,281835582),(9,'Gostaria de saber em que dia haverá Futebol.',7,281835582),(10,'Será no dia 13 deste mês.',7,154825342);
+INSERT INTO `mensagem` VALUES (1,'Ola, tudo bem? Gostaria de divulgar algumas informações.',7,154825342),(3,'Gostaria de informar que haverão novas atividades esta semana.',7,154825342),(4,'É tudo, muitos cumprimentos.',7,154825342),(5,'Atenciosamente,',7,154825342),(6,'Pedro Martins',7,154825342),(7,'Muito obrigado pelas informações.',7,281835582),(8,'Espero que os meus filhos gostem dessas novas atividades.',7,281835582),(9,'Gostaria de saber em que dia haverá Futebol.',7,281835582),(10,'Será no dia 13 deste mês.',7,154825342),(11,'Olá Tudo bem?',10,211111111),(12,'Gostaria de saber se está tudo bem com a Helena',10,211111111),(13,'Olá, está tudo bem sim!',10,154825342),(14,'Ela está a brincar com os dinossauros :)',10,154825342),(15,'Ela está a brincar com os dinossauros :)',10,154825342),(16,'Está tudo ok!',10,154825342),(17,'Olá',10,213757233);
 /*!40000 ALTER TABLE `mensagem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,7 +416,7 @@ CREATE TABLE `pessoa` (
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
-INSERT INTO `pessoa` VALUES (1,'Horacio Drummond',53),(82123456,'Miguel Silva',2),(83456789,'Ana Oliveira',1),(84567890,'Pedro Santos',3),(85789012,'Beatriz Costa',0),(86890123,'Rui Pereira',35),(87901234,'Carla Fonseca',42),(89012345,'José Martins',50),(90123456,'Sofia Sousa',28),(101866776,'Marta Silva',22),(111306120,'Luís Mendes',34),(114937360,'Mariano Fernandes',2),(117082778,'Rui Oliveira',40),(137498006,'Leonor Mendes',2),(147370932,'Joao Costa',1),(147819490,'José Costa',27),(154825342,'Pedro Martins',29),(159827628,'Jose Fernandes',34),(159827636,'Lubelio Romualdo',38),(159827647,'Jose Fernandes',34),(164083702,'Carlos Pereira',35),(171812432,'Daniel Sousa',0),(172850580,'Ana Santos',28),(175156429,'Beatriz Sousa',26),(179168908,'Mariana Oliveira',0),(179813564,'Catarina Fernandes',32),(189648359,'Tomás Santos',1),(199656762,'Sofia Almeida',31),(204621455,'Tiago Santos',30),(213508244,'Francisco Martins',1),(213757233,'Isabel Pereira',37),(221388237,'Miguel Oliveira',24),(223056814,'Lara Costa',0),(231060989,'Raquel Fernandes',31),(231061319,'Inês Rodrigues',33),(238714575,'Ricardo Silva',2),(248590430,'Joao Silva',57),(253638596,'Cátia Silva',23),(256827624,'Emidio Gomes',42),(260100048,'João Sousa',28),(269364312,'Gonçalo Almeida',35),(281835582,'Ana Costa',29),(294388767,'Carolina Almeida',2),(295313546,'Hugo Martins',26),(295807548,'Luna Costa',1);
+INSERT INTO `pessoa` VALUES (1,'Horacio Drummond',53),(82123456,'Miguel Silva',2),(83456789,'Ana Oliveira',1),(84567890,'Pedro Santos',3),(85789012,'Beatriz Costa',0),(86890123,'Rui Pereira',35),(87901234,'Carla Fonseca',42),(89012345,'José Martins',50),(90123456,'Sofia Sousa',28),(101866776,'Marta Silva',22),(111306120,'Luís Mendes',34),(114937360,'Mariano Fernandes',2),(117082778,'Rui Oliveira',40),(137498006,'Leonor Mendes',2),(147370932,'Joao Costa',1),(147819490,'José Costa',27),(154825342,'Pedro Martins',29),(159827628,'Jose Fernandes',34),(159827636,'Lubelio Romualdo',38),(159827647,'Jose Fernandes',34),(164083702,'Carlos Pereira',35),(171812432,'Daniel Sousa',0),(172850580,'Ana Santos',28),(175156429,'Beatriz Sousa',26),(179168908,'Mariana Oliveira',0),(179813564,'Catarina Fernandes',32),(189648359,'Tomás Santos',1),(199656762,'Sofia Almeida',31),(204621455,'Tiago Santos',30),(211111111,'Vitor Gouveia',43),(211111112,'Pedro Gouveia',43),(213508244,'Francisco Martins',1),(213757233,'Isabel Pereira',37),(221388237,'Miguel Oliveira',24),(222222223,'Roberto Gouveia',1),(223056814,'Lara Costa',0),(231060989,'Raquel Fernandes',31),(231061319,'Inês Rodrigues',33),(233333332,'Beatriz Gouveia',2),(233333333,'Helena Gouveia',2),(238714575,'Ricardo Silva',2),(248590430,'Joao Silva',57),(253638596,'Cátia Silva',23),(256827624,'Emidio Gomes',42),(260100048,'João Sousa',28),(269364312,'Gonçalo Almeida',35),(281835582,'Ana Costa',29),(294388767,'Carolina Almeida',2),(295313546,'Hugo Martins',26),(295807548,'Luna Costa',1);
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -431,7 +431,7 @@ CREATE TABLE `sala` (
   `idsala` int NOT NULL AUTO_INCREMENT,
   `tituloSala` varchar(100) NOT NULL,
   PRIMARY KEY (`idsala`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,7 +440,7 @@ CREATE TABLE `sala` (
 
 LOCK TABLES `sala` WRITE;
 /*!40000 ALTER TABLE `sala` DISABLE KEYS */;
-INSERT INTO `sala` VALUES (6,'Mariano Fernandes'),(7,'Ana Pereira'),(8,'Joao Vasconcelos'),(9,'Comunicação Interna');
+INSERT INTO `sala` VALUES (6,'Mariano Fernandes'),(7,'Ana Pereira'),(8,'Joao Vasconcelos'),(9,'Comunicação Interna'),(10,'Helena Gouveia'),(11,'Beatriz Gouveia');
 /*!40000 ALTER TABLE `sala` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -468,7 +468,7 @@ CREATE TABLE `sala_has_pessoa` (
 
 LOCK TABLES `sala_has_pessoa` WRITE;
 /*!40000 ALTER TABLE `sala_has_pessoa` DISABLE KEYS */;
-INSERT INTO `sala_has_pessoa` VALUES (6,172850580),(6,213757233),(6,231060989),(6,231061319),(6,295313546),(7,1),(7,164083702),(7,213757233),(7,231060989),(7,231061319),(7,281835582),(8,154825342),(8,159827636),(8,159827647),(8,213757233),(8,231060989),(8,231061319),(9,1),(9,159827628),(9,159827636),(9,213757233),(9,231060989),(9,231061319),(9,256827624),(9,281835582),(9,295313546);
+INSERT INTO `sala_has_pessoa` VALUES (6,172850580),(6,213757233),(6,231060989),(6,231061319),(6,295313546),(7,1),(7,164083702),(7,213757233),(7,231060989),(7,231061319),(7,281835582),(8,154825342),(8,159827636),(8,159827647),(8,213757233),(8,231060989),(8,231061319),(9,1),(9,213757233),(9,231060989),(9,231061319),(9,256827624),(10,154825342),(10,159827647),(10,211111111),(10,213757233),(10,231060989),(10,231061319),(10,256827624),(11,154825342),(11,159827647),(11,211111112),(11,213757233),(11,231060989),(11,231061319),(11,256827624);
 /*!40000 ALTER TABLE `sala_has_pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -504,4 +504,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-20  3:27:55
+-- Dump completed on 2023-12-20 18:30:03
